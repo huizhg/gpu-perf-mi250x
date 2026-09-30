@@ -1,0 +1,1191 @@
+	.amdgcn_target "amdgcn-amd-amdhsa--gfx90a"
+	.amdhsa_code_object_version 5
+	.text
+	.globl	matmul_kernel                   ; -- Begin function matmul_kernel
+	.p2align	8
+	.type	matmul_kernel,@function
+matmul_kernel:                          ; @matmul_kernel
+.Lfunc_begin0:
+	.cfi_sections .debug_frame
+	.cfi_startproc
+; %bb.7:
+	.file	1 "/scratch/project_462001433/hui/gpu-perf/tutorials/." "03-matrix-multiplication.py"
+	.loc	1 233 0 prologue_end            ; 03-matrix-multiplication.py:233:0
+	s_load_dwordx2 s[6:7], s[4:5], 0x0
+	s_load_dwordx8 s[8:15], s[4:5], 0x8
+	s_waitcnt lgkmcnt(0)
+	s_branch .LBB0_0
+	.loc	1 0 0 is_stmt 0                 ; :0:0
+.Ltmp0:
+	.p2align	8
+; %bb.8:
+.LBB0_0:
+.Ltmp1:
+	.file	2 "/opt/venv/lib/python3.12/site-packages/triton/language" "standard.py"
+	.loc	2 43 17 is_stmt 1               ; standard.py:43:17 @[ 03-matrix-multiplication.py:258:27 ]
+	s_add_i32 s2, s13, 63
+	.loc	2 43 30 is_stmt 0               ; standard.py:43:30 @[ 03-matrix-multiplication.py:258:27 ]
+	s_ashr_i32 s3, s2, 31
+	s_lshr_b32 s3, s3, 26
+	s_add_i32 s2, s2, s3
+	s_ashr_i32 s2, s2, 6
+.Ltmp2:
+	.loc	1 259 38 is_stmt 1              ; 03-matrix-multiplication.py:259:38
+	s_lshl_b32 s3, s2, 2
+	s_mov_b64 s[0:1], s[6:7]
+	.loc	1 260 22                        ; 03-matrix-multiplication.py:260:22
+	s_abs_i32 s6, s3
+	v_cvt_f32_u32_e32 v1, s6
+	s_mov_b64 s[20:21], s[10:11]
+.Ltmp3:
+	.loc	2 43 17                         ; standard.py:43:17 @[ 03-matrix-multiplication.py:257:27 ]
+	s_add_i32 s7, s12, 0x7f
+.Ltmp4:
+	.loc	1 260 22                        ; 03-matrix-multiplication.py:260:22
+	s_sub_i32 s11, 0, s6
+	v_rcp_iflag_f32_e32 v1, v1
+.Ltmp5:
+	.loc	2 43 30                         ; standard.py:43:30 @[ 03-matrix-multiplication.py:257:27 ]
+	s_ashr_i32 s10, s7, 31
+	s_lshr_b32 s10, s10, 25
+	s_add_i32 s7, s7, s10
+.Ltmp6:
+	.loc	1 260 22                        ; 03-matrix-multiplication.py:260:22
+	v_mul_f32_e32 v1, 0x4f7ffffe, v1
+	v_cvt_u32_f32_e32 v1, v1
+	s_abs_i32 s10, s16
+	s_xor_b32 s2, s16, s2
+.Ltmp7:
+	.loc	2 43 30                         ; standard.py:43:30 @[ 03-matrix-multiplication.py:257:27 ]
+	s_ashr_i32 s7, s7, 7
+.Ltmp8:
+	.loc	1 260 22                        ; 03-matrix-multiplication.py:260:22
+	v_readfirstlane_b32 s17, v1
+	s_mul_i32 s11, s11, s17
+	s_mul_hi_u32 s11, s17, s11
+	s_add_i32 s17, s17, s11
+	s_mul_hi_u32 s11, s10, s17
+	s_mul_i32 s17, s11, s6
+	s_sub_i32 s10, s10, s17
+	s_ashr_i32 s2, s2, 31
+	s_add_i32 s17, s11, 1
+	s_sub_i32 s18, s10, s6
+	s_cmp_ge_u32 s10, s6
+	s_cselect_b32 s11, s17, s11
+	s_cselect_b32 s10, s18, s10
+	s_add_i32 s17, s11, 1
+	s_cmp_ge_u32 s10, s6
+	s_cselect_b32 s6, s17, s11
+	s_xor_b32 s6, s6, s2
+	s_sub_i32 s2, s6, s2
+	.loc	1 261 29                        ; 03-matrix-multiplication.py:261:29
+	s_lshl_b32 s6, s2, 2
+	.loc	1 262 35                        ; 03-matrix-multiplication.py:262:35
+	s_sub_i32 s7, s7, s6
+	.loc	1 262 48 is_stmt 0              ; 03-matrix-multiplication.py:262:48
+	s_min_i32 s7, s7, 4
+	.loc	1 264 40 is_stmt 1              ; 03-matrix-multiplication.py:264:40
+	s_abs_i32 s10, s7
+	v_cvt_f32_u32_e32 v1, s10
+	.loc	1 263 34                        ; 03-matrix-multiplication.py:263:34
+	s_mul_i32 s2, s2, s3
+	s_sub_i32 s2, s16, s2
+	.loc	1 264 40                        ; 03-matrix-multiplication.py:264:40
+	s_sub_i32 s16, 0, s10
+	v_rcp_iflag_f32_e32 v1, v1
+	s_abs_i32 s11, s2
+	s_xor_b32 s3, s2, s7
+	s_ashr_i32 s3, s3, 31
+	v_mul_f32_e32 v1, 0x4f7ffffe, v1
+	v_cvt_u32_f32_e32 v1, v1
+	.loc	1 286 51                        ; 03-matrix-multiplication.py:286:51
+	v_lshrrev_b32_e32 v25, 3, v0
+	s_load_dword s18, s[4:5], 0x28
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	v_bfrev_b32_e32 v39, 1
+	.loc	1 264 40                        ; 03-matrix-multiplication.py:264:40
+	v_readfirstlane_b32 s17, v1
+	s_mul_i32 s16, s16, s17
+	s_mul_hi_u32 s16, s17, s16
+	s_add_i32 s17, s17, s16
+	s_mul_hi_u32 s16, s11, s17
+	s_mul_i32 s17, s16, s10
+	s_sub_i32 s11, s11, s17
+	s_add_i32 s17, s16, 1
+	s_sub_i32 s19, s11, s10
+	s_cmp_ge_u32 s11, s10
+	s_cselect_b32 s16, s17, s16
+	s_cselect_b32 s11, s19, s11
+	s_add_i32 s17, s16, 1
+	s_cmp_ge_u32 s11, s10
+	s_cselect_b32 s10, s17, s16
+	s_xor_b32 s10, s10, s3
+	s_sub_i32 s3, s10, s3
+	.loc	1 286 68                        ; 03-matrix-multiplication.py:286:68
+	s_abs_i32 s10, s12
+	v_cvt_f32_u32_e32 v1, s10
+	.loc	1 263 54                        ; 03-matrix-multiplication.py:263:54
+	s_mul_i32 s7, s3, s7
+	s_sub_i32 s2, s2, s7
+	.loc	1 263 27 is_stmt 0              ; 03-matrix-multiplication.py:263:27
+	s_add_i32 s2, s2, s6
+	.loc	1 286 68 is_stmt 1              ; 03-matrix-multiplication.py:286:68
+	v_rcp_iflag_f32_e32 v1, v1
+	.loc	1 286 23 is_stmt 0              ; 03-matrix-multiplication.py:286:23
+	s_lshl_b32 s16, s2, 7
+	.loc	1 286 68                        ; 03-matrix-multiplication.py:286:68
+	s_sub_i32 s6, 0, s10
+	.loc	1 286 38                        ; 03-matrix-multiplication.py:286:38
+	v_or_b32_e32 v2, s16, v25
+	.loc	1 286 68                        ; 03-matrix-multiplication.py:286:68
+	v_mul_f32_e32 v1, 0x4f7ffffe, v1
+	v_cvt_u32_f32_e32 v1, v1
+	s_bfe_i32 s2, s2, 0x10018
+	v_add_u32_e32 v2, s2, v2
+	v_xor_b32_e32 v3, s2, v2
+	v_mul_lo_u32 v4, s6, v1
+	v_mul_hi_u32 v4, v1, v4
+	v_add_u32_e32 v1, v1, v4
+	v_mul_hi_u32 v4, v3, v1
+	v_mul_lo_u32 v4, v4, s10
+	v_add_u32_e32 v2, 64, v2
+	v_sub_u32_e32 v3, v3, v4
+	v_xor_b32_e32 v2, s2, v2
+	v_subrev_u32_e32 v4, s10, v3
+	v_cmp_le_u32_e32 vcc, s10, v3
+	v_mul_hi_u32 v1, v2, v1
+	v_cndmask_b32_e32 v3, v3, v4, vcc
+	v_mul_lo_u32 v1, v1, s10
+	v_subrev_u32_e32 v4, s10, v3
+	v_cmp_le_u32_e32 vcc, s10, v3
+	v_sub_u32_e32 v1, v2, v1
+	v_cndmask_b32_e32 v3, v3, v4, vcc
+	v_subrev_u32_e32 v2, s10, v1
+	v_cmp_le_u32_e32 vcc, s10, v1
+	v_cndmask_b32_e32 v1, v1, v2, vcc
+	v_subrev_u32_e32 v2, s10, v1
+	v_cmp_le_u32_e32 vcc, s10, v1
+	.loc	1 287 68 is_stmt 1              ; 03-matrix-multiplication.py:287:68
+	s_abs_i32 s6, s13
+	.loc	1 286 68                        ; 03-matrix-multiplication.py:286:68
+	v_cndmask_b32_e32 v1, v1, v2, vcc
+	.loc	1 287 68                        ; 03-matrix-multiplication.py:287:68
+	v_cvt_f32_u32_e32 v2, s6
+	.loc	1 286 68                        ; 03-matrix-multiplication.py:286:68
+	v_xor_b32_e32 v3, s2, v3
+	v_xor_b32_e32 v1, s2, v1
+	.loc	1 287 51                        ; 03-matrix-multiplication.py:287:51
+	v_lshlrev_b32_e32 v4, 3, v0
+	.loc	1 287 68 is_stmt 0              ; 03-matrix-multiplication.py:287:68
+	v_rcp_iflag_f32_e32 v2, v2
+	.loc	1 286 68 is_stmt 1              ; 03-matrix-multiplication.py:286:68
+	v_subrev_u32_e32 v3, s2, v3
+	v_subrev_u32_e32 v1, s2, v1
+	.loc	1 287 23                        ; 03-matrix-multiplication.py:287:23
+	s_lshl_b32 s17, s3, 6
+	.loc	1 287 68 is_stmt 0              ; 03-matrix-multiplication.py:287:68
+	v_mul_f32_e32 v2, 0x4f7ffffe, v2
+	v_cvt_u32_f32_e32 v2, v2
+	.loc	1 287 51                        ; 03-matrix-multiplication.py:287:51
+	v_and_b32_e32 v18, 56, v4
+	.loc	1 287 68                        ; 03-matrix-multiplication.py:287:68
+	s_sub_i32 s2, 0, s6
+	.loc	1 287 38                        ; 03-matrix-multiplication.py:287:38
+	v_or_b32_e32 v4, s17, v18
+	.loc	1 287 68                        ; 03-matrix-multiplication.py:287:68
+	s_bfe_i32 s19, s3, 0x10019
+	v_mul_lo_u32 v5, s2, v2
+	v_add_u32_e32 v4, s19, v4
+	v_mul_hi_u32 v5, v2, v5
+	v_xor_b32_e32 v4, s19, v4
+	v_add_u32_e32 v2, v2, v5
+	v_mul_hi_u32 v2, v4, v2
+	v_mul_lo_u32 v2, v2, s6
+	v_sub_u32_e32 v2, v4, v2
+	v_subrev_u32_e32 v4, s6, v2
+	v_cmp_le_u32_e32 vcc, s6, v2
+	v_cndmask_b32_e32 v2, v2, v4, vcc
+.Ltmp9:
+	.loc	2 43 17 is_stmt 1               ; standard.py:43:17 @[ 03-matrix-multiplication.py:298:33 ]
+	s_add_i32 s22, s14, 63
+.Ltmp10:
+	.loc	1 287 68                        ; 03-matrix-multiplication.py:287:68
+	v_subrev_u32_e32 v4, s6, v2
+	v_cmp_le_u32_e32 vcc, s6, v2
+	.loc	1 298 22                        ; 03-matrix-multiplication.py:298:22
+	s_cmp_gt_i32 s22, 63
+	.loc	1 287 68                        ; 03-matrix-multiplication.py:287:68
+	v_cndmask_b32_e32 v2, v2, v4, vcc
+	.loc	1 289 22                        ; 03-matrix-multiplication.py:289:22
+	v_mad_u64_u32 v[22:23], s[2:3], v1, s15, v[18:19]
+	.loc	1 298 22                        ; 03-matrix-multiplication.py:298:22
+	s_cselect_b64 s[6:7], -1, 0
+	.loc	1 301 51                        ; 03-matrix-multiplication.py:301:51
+	v_cmp_gt_i32_e32 vcc, s14, v18
+	.loc	1 287 68                        ; 03-matrix-multiplication.py:287:68
+	v_xor_b32_e32 v24, s19, v2
+	.loc	1 289 22                        ; 03-matrix-multiplication.py:289:22
+	v_mad_u64_u32 v[20:21], s[2:3], v3, s15, v[18:19]
+	.loc	1 298 22                        ; 03-matrix-multiplication.py:298:22
+	s_and_b64 vcc, vcc, s[6:7]
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	v_lshlrev_b32_e32 v2, 1, v22
+	.loc	1 287 68                        ; 03-matrix-multiplication.py:287:68
+	v_subrev_u32_e32 v10, s19, v24
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	v_lshlrev_b32_e32 v1, 1, v20
+	v_cndmask_b32_e32 v11, v39, v2, vcc
+	s_and_b32 s1, s1, 0xffff
+	s_mov_b32 s3, 0x27000
+	s_mov_b32 s2, 0x7ffffffe
+	v_cndmask_b32_e32 v1, v39, v1, vcc
+	.loc	1 290 22                        ; 03-matrix-multiplication.py:290:22
+	s_waitcnt lgkmcnt(0)
+	v_mad_u64_u32 v[26:27], s[10:11], s18, v25, v[10:11]
+	.loc	1 302 51                        ; 03-matrix-multiplication.py:302:51
+	v_cmp_gt_i32_e32 vcc, s14, v25
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	buffer_load_dwordx4 v[2:5], v1, s[0:3], 0 offen
+	buffer_load_dwordx4 v[6:9], v11, s[0:3], 0 offen
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	v_lshlrev_b32_e32 v1, 1, v26
+	.loc	1 298 22                        ; 03-matrix-multiplication.py:298:22
+	s_and_b64 vcc, vcc, s[6:7]
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	s_and_b32 s9, s9, 0xffff
+	s_mov_b32 s10, s2
+	s_mov_b32 s11, s3
+	v_cndmask_b32_e32 v1, v39, v1, vcc
+	buffer_load_dwordx4 v[10:13], v1, s[8:11], 0 offen
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	v_lshlrev_b32_e32 v14, 4, v0
+	v_and_b32_e32 v15, 0x78, v0
+	v_xor_b32_e32 v15, v14, v15
+	v_add_u32_e32 v31, 0, v15
+	.loc	1 286 51                        ; 03-matrix-multiplication.py:286:51
+	v_and_b32_e32 v1, 15, v0
+	v_and_b32_e32 v19, 0x180, v0
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	v_add_u32_e32 v33, 0, v14
+	.loc	1 298 22                        ; 03-matrix-multiplication.py:298:22
+	s_cmpk_lt_i32 s22, 0x80
+	v_lshlrev_b32_e32 v21, 7, v1
+	v_lshlrev_b32_e32 v23, 4, v19
+	v_lshlrev_b32_e32 v27, 3, v1
+	v_and_b32_e32 v28, 48, v0
+	v_lshlrev_b32_e32 v29, 1, v1
+	v_lshrrev_b32_e32 v30, 1, v0
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	s_waitcnt vmcnt(1)
+	ds_write2st64_b64 v31, v[2:3], v[6:7] offset1:16
+	v_xor_b32_e32 v2, 8, v15
+	v_add_u32_e32 v32, 0, v2
+	v_mov_b32_e32 v6, 0
+	ds_write2st64_b64 v32, v[4:5], v[8:9] offset1:16
+	v_mov_b32_e32 v7, v6
+	v_mov_b32_e32 v8, v6
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	s_waitcnt vmcnt(0)
+	ds_write_b128 v33, v[10:13] offset:16384
+	v_mov_b32_e32 v9, v6
+	v_mov_b32_e32 v10, v6
+	v_mov_b32_e32 v11, v6
+	v_mov_b32_e32 v12, v6
+	v_mov_b32_e32 v13, v6
+	v_mov_b32_e32 v2, v6
+	v_mov_b32_e32 v3, v6
+	v_mov_b32_e32 v4, v6
+	v_mov_b32_e32 v5, v6
+	v_mov_b32_e32 v14, v6
+	v_mov_b32_e32 v15, v6
+	v_mov_b32_e32 v16, v6
+	v_mov_b32_e32 v17, v6
+	.loc	1 298 22                        ; 03-matrix-multiplication.py:298:22
+	s_cbranch_scc1 .LBB0_4
+; %bb.1:                                ; %.lr.ph
+	.loc	1 0 22 is_stmt 0                ; 03-matrix-multiplication.py:0:22
+	v_lshrrev_b32_e32 v2, 1, v28
+	v_xor_b32_e32 v2, v27, v2
+	v_or3_b32 v38, v21, v23, v2
+	v_lshlrev_b32_e32 v2, 5, v28
+	v_and_b32_e32 v3, 32, v30
+	.loc	1 301 55 is_stmt 1              ; 03-matrix-multiplication.py:301:55
+	s_sub_i32 s10, s14, 64
+	.loc	1 301 20 is_stmt 0              ; 03-matrix-multiplication.py:301:20
+	v_mov_b32_e32 v4, 0x80
+	v_lshl_add_u32 v5, v20, 1, v4
+	.loc	1 301 51                        ; 03-matrix-multiplication.py:301:51
+	v_cmp_gt_u32_e32 vcc, s10, v18
+	.loc	1 302 20 is_stmt 1              ; 03-matrix-multiplication.py:302:20
+	v_add3_u32 v2, 0, v3, v2
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	v_cndmask_b32_e32 v5, v39, v5, vcc
+	v_lshl_add_u32 v4, v22, 1, v4
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	v_add_u32_e32 v34, v2, v29
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	v_cndmask_b32_e32 v4, v39, v4, vcc
+	buffer_load_dwordx4 v[14:17], v5, s[0:3], 0 offen
+	buffer_load_dwordx4 v[40:43], v4, s[0:3], 0 offen
+	s_waitcnt lgkmcnt(0)
+	s_barrier
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v6, v34 offset:16384
+	ds_read_u16 v7, v34 offset:16640
+	ds_read_u16 v8, v34 offset:16768
+	ds_read_u16 v9, v34 offset:16512
+	v_add_u32_e32 v35, 0, v38
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_mov_b32 s15, 0x5040100
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	ds_read2st64_b64 v[2:5], v35 offset1:16
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(2)
+	v_perm_b32 v45, v8, v7, s15
+	s_waitcnt lgkmcnt(1)
+	v_perm_b32 v44, v9, v6, s15
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v37, v34 offset:18432
+	ds_read_u16 v46, v34 offset:18688
+	ds_read_u16 v47, v34 offset:18816
+	ds_read_u16 v48, v34 offset:18560
+	v_xor_b32_e32 v6, 32, v38
+	v_add_u32_e32 v36, 0, v6
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(4)
+	v_mfma_f32_16x16x16f16 v[6:9], v[44:45], v[2:3], 0
+	s_waitcnt lgkmcnt(1)
+	v_perm_b32 v49, v47, v46, s15
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	ds_read2st64_b64 v[10:13], v36 offset1:16
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(1)
+	v_perm_b32 v48, v48, v37, s15
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v37, v34 offset:16832
+	ds_read_u16 v50, v34 offset:16704
+	ds_read_u16 v51, v34 offset:16576
+	.loc	1 307 33                        ; 03-matrix-multiplication.py:307:33
+	s_lshl_b32 s11, s18, 6
+	.loc	1 302 51                        ; 03-matrix-multiplication.py:302:51
+	v_cmp_gt_u32_e32 vcc, s10, v25
+	.loc	1 302 20 is_stmt 0              ; 03-matrix-multiplication.py:302:20
+	s_mov_b32 s10, s2
+	.loc	1 304 35 is_stmt 1              ; 03-matrix-multiplication.py:304:35
+	v_mfma_f32_16x16x16f16 v[44:47], v[44:45], v[4:5], 0
+	s_waitcnt lgkmcnt(1)
+	v_perm_b32 v53, v37, v50, s15
+.Ltmp11:
+	.loc	2 43 30                         ; standard.py:43:30 @[ 03-matrix-multiplication.py:298:33 ]
+	s_lshr_b32 s22, s22, 6
+.Ltmp12:
+	.loc	1 298 22                        ; 03-matrix-multiplication.py:298:22
+	s_cmp_eq_u32 s22, 2
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	v_mfma_f32_16x16x16f16 v[6:9], v[48:49], v[10:11], v[6:9]
+	v_mfma_f32_16x16x16f16 v[44:47], v[48:49], v[12:13], v[44:47]
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v48, v34 offset:16448
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v52, v51, v48, s15
+	s_nop 1
+	v_mfma_f32_16x16x16f16 v[48:51], v[52:53], v[2:3], 0
+	v_mfma_f32_16x16x16f16 v[2:5], v[52:53], v[4:5], 0
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v37, v34 offset:18880
+	ds_read_u16 v52, v34 offset:18752
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v53, v37, v52, s15
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v37, v34 offset:18624
+	ds_read_u16 v52, v34 offset:18496
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v52, v37, v52, s15
+	s_nop 1
+	v_mfma_f32_16x16x16f16 v[48:51], v[52:53], v[10:11], v[48:51]
+	v_xor_b32_e32 v37, 64, v38
+	v_add_u32_e32 v37, 0, v37
+	v_mfma_f32_16x16x16f16 v[2:5], v[52:53], v[12:13], v[2:5]
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v10, v34 offset:20480
+	ds_read_u16 v11, v34 offset:20736
+	ds_read_u16 v12, v34 offset:20864
+	ds_read_u16 v13, v34 offset:20608
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(1)
+	v_perm_b32 v53, v12, v11, s15
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v52, v13, v10, s15
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	ds_read2st64_b64 v[10:13], v37 offset1:16
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(0)
+	v_mfma_f32_16x16x16f16 v[6:9], v[52:53], v[10:11], v[6:9]
+	v_mfma_f32_16x16x16f16 v[44:47], v[52:53], v[12:13], v[44:47]
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v52, v34 offset:20928
+	ds_read_u16 v53, v34 offset:20800
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v53, v52, v53, s15
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v52, v34 offset:20672
+	ds_read_u16 v54, v34 offset:20544
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v52, v52, v54, s15
+	s_nop 1
+	v_mfma_f32_16x16x16f16 v[48:51], v[52:53], v[10:11], v[48:51]
+	v_mfma_f32_16x16x16f16 v[52:55], v[52:53], v[12:13], v[2:5]
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	s_nop 6
+	ds_read_u16 v2, v34 offset:22784
+	ds_read_u16 v3, v34 offset:22912
+	ds_read_u16 v4, v34 offset:22656
+	ds_read_u16 v5, v34 offset:22528
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(2)
+	v_perm_b32 v3, v3, v2, s15
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v2, v4, v5, s15
+	v_xor_b32_e32 v4, 0x60, v38
+	v_add_u32_e32 v38, 0, v4
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	ds_read2st64_b64 v[56:59], v38 offset1:16
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v10, v34 offset:22976
+	ds_read_u16 v11, v34 offset:22848
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(2)
+	v_mfma_f32_16x16x16f16 v[6:9], v[2:3], v[56:57], v[6:9]
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v61, v10, v11, s15
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v10, v34 offset:22720
+	ds_read_u16 v11, v34 offset:22592
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v60, v10, v11, s15
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	v_add_lshl_u32 v10, v26, s11, 1
+	v_cndmask_b32_e32 v26, v39, v10, vcc
+	s_mov_b32 s11, s3
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	v_mfma_f32_16x16x16f16 v[2:5], v[2:3], v[58:59], v[44:47]
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	s_nop 6
+	buffer_load_dwordx4 v[44:47], v26, s[8:11], 0 offen
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	v_mfma_f32_16x16x16f16 v[10:13], v[60:61], v[56:57], v[48:51]
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	s_waitcnt lgkmcnt(0)
+	s_barrier
+	s_waitcnt vmcnt(1)
+	ds_write2st64_b64 v31, v[14:15], v[40:41] offset1:16
+	ds_write2st64_b64 v32, v[16:17], v[42:43] offset1:16
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	s_waitcnt vmcnt(0)
+	ds_write_b128 v33, v[44:47] offset:16384
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	v_mfma_f32_16x16x16f16 v[14:17], v[60:61], v[58:59], v[52:55]
+	.loc	1 298 22                        ; 03-matrix-multiplication.py:298:22
+	s_cbranch_scc1 .LBB0_4
+; %bb.2:                                ; %.peel.next
+	v_or_b32_e32 v26, 0x80, v25
+	v_mad_u64_u32 v[40:41], s[24:25], s18, v26, v[24:25]
+	v_subrev_u32_e32 v24, s19, v40
+	v_mov_b32_e32 v26, 0x100
+	v_lshlrev_b32_e32 v24, 1, v24
+	s_lshl_b32 s18, s18, 7
+	v_lshl_add_u32 v22, v22, 1, v26
+	v_lshl_add_u32 v20, v20, 1, v26
+	s_add_i32 s19, s22, -2
+	s_addk_i32 s14, 0xff80
+	v_bfrev_b32_e32 v26, 1
+.LBB0_3:                                ; =>This Inner Loop Header: Depth=1
+	.loc	1 301 51                        ; 03-matrix-multiplication.py:301:51
+	v_cmp_gt_i32_e32 vcc, s14, v18
+	.loc	1 301 20 is_stmt 0              ; 03-matrix-multiplication.py:301:20
+	v_cndmask_b32_e32 v39, v26, v20, vcc
+	v_cndmask_b32_e32 v48, v26, v22, vcc
+	buffer_load_dwordx4 v[40:43], v39, s[0:3], 0 offen
+	buffer_load_dwordx4 v[44:47], v48, s[0:3], 0 offen
+	s_waitcnt lgkmcnt(0)
+	s_barrier
+	ds_read2st64_b64 v[48:51], v35 offset1:16
+	.loc	1 302 20 is_stmt 1              ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v39, v34 offset:16384
+	ds_read_u16 v52, v34 offset:16640
+	ds_read_u16 v53, v34 offset:16768
+	ds_read_u16 v54, v34 offset:16512
+	ds_read_u16 v55, v34 offset:16832
+	ds_read_u16 v56, v34 offset:16704
+	ds_read_u16 v58, v34 offset:16576
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(4)
+	v_perm_b32 v53, v53, v52, s15
+	s_waitcnt lgkmcnt(3)
+	v_perm_b32 v52, v54, v39, s15
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v39, v34 offset:16448
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(2)
+	v_perm_b32 v57, v55, v56, s15
+	v_mfma_f32_16x16x16f16 v[6:9], v[52:53], v[48:49], v[6:9]
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v56, v58, v39, s15
+	.loc	1 302 51                        ; 03-matrix-multiplication.py:302:51
+	v_cmp_gt_i32_e32 vcc, s14, v25
+	.loc	1 298 22                        ; 03-matrix-multiplication.py:298:22
+	s_add_i32 s19, s19, -1
+	s_sub_i32 s14, s14, 64
+	v_add_u32_e32 v20, 0x80, v20
+	v_add_u32_e32 v22, 0x80, v22
+	s_cmp_lg_u32 s19, 0
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	v_mfma_f32_16x16x16f16 v[10:13], v[56:57], v[48:49], v[10:13]
+	v_mfma_f32_16x16x16f16 v[2:5], v[52:53], v[50:51], v[2:5]
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	ds_read2st64_b64 v[52:55], v36 offset1:16
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v39, v34 offset:18432
+	ds_read_u16 v48, v34 offset:18560
+	ds_read_u16 v49, v34 offset:18688
+	ds_read_u16 v58, v34 offset:18816
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(2)
+	v_perm_b32 v48, v48, v39, s15
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v49, v58, v49, s15
+	v_mfma_f32_16x16x16f16 v[14:17], v[56:57], v[50:51], v[14:17]
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v50, v34 offset:18880
+	ds_read_u16 v51, v34 offset:18752
+	ds_read_u16 v56, v34 offset:18624
+	ds_read_u16 v39, v34 offset:18496
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(2)
+	v_perm_b32 v57, v50, v51, s15
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v56, v56, v39, s15
+	v_mfma_f32_16x16x16f16 v[6:9], v[48:49], v[52:53], v[6:9]
+	s_nop 0
+	v_mfma_f32_16x16x16f16 v[10:13], v[56:57], v[52:53], v[10:13]
+	v_mfma_f32_16x16x16f16 v[2:5], v[48:49], v[54:55], v[2:5]
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	ds_read2st64_b64 v[48:51], v37 offset1:16
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v39, v34 offset:20480
+	ds_read_u16 v52, v34 offset:20608
+	ds_read_u16 v53, v34 offset:20736
+	ds_read_u16 v58, v34 offset:20864
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(2)
+	v_perm_b32 v52, v52, v39, s15
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v53, v58, v53, s15
+	v_mfma_f32_16x16x16f16 v[14:17], v[56:57], v[54:55], v[14:17]
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v54, v34 offset:20928
+	ds_read_u16 v55, v34 offset:20800
+	ds_read_u16 v56, v34 offset:20672
+	ds_read_u16 v39, v34 offset:20544
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(2)
+	v_perm_b32 v57, v54, v55, s15
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v56, v56, v39, s15
+	v_mfma_f32_16x16x16f16 v[6:9], v[52:53], v[48:49], v[6:9]
+	s_nop 0
+	v_mfma_f32_16x16x16f16 v[10:13], v[56:57], v[48:49], v[10:13]
+	v_mfma_f32_16x16x16f16 v[2:5], v[52:53], v[50:51], v[2:5]
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	ds_read2st64_b64 v[52:55], v38 offset1:16
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v39, v34 offset:22528
+	ds_read_u16 v48, v34 offset:22656
+	ds_read_u16 v49, v34 offset:22784
+	ds_read_u16 v58, v34 offset:22912
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(2)
+	v_perm_b32 v48, v48, v39, s15
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v49, v58, v49, s15
+	v_mfma_f32_16x16x16f16 v[14:17], v[56:57], v[50:51], v[14:17]
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v50, v34 offset:22976
+	ds_read_u16 v51, v34 offset:22848
+	ds_read_u16 v56, v34 offset:22720
+	ds_read_u16 v39, v34 offset:22592
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(2)
+	v_perm_b32 v57, v50, v51, s15
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v56, v56, v39, s15
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	v_cndmask_b32_e32 v39, v26, v24, vcc
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	v_mfma_f32_16x16x16f16 v[6:9], v[48:49], v[52:53], v[6:9]
+	.loc	1 298 22                        ; 03-matrix-multiplication.py:298:22
+	v_add_u32_e32 v24, s18, v24
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	v_mfma_f32_16x16x16f16 v[2:5], v[48:49], v[54:55], v[2:5]
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	buffer_load_dwordx4 v[48:51], v39, s[8:11], 0 offen
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	s_waitcnt lgkmcnt(0)
+	s_barrier
+	s_waitcnt vmcnt(1)
+	ds_write2st64_b64 v31, v[40:41], v[44:45] offset1:16
+	ds_write2st64_b64 v32, v[42:43], v[46:47] offset1:16
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	s_waitcnt vmcnt(0)
+	ds_write_b128 v33, v[48:51] offset:16384
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	v_mfma_f32_16x16x16f16 v[10:13], v[56:57], v[52:53], v[10:13]
+	v_mfma_f32_16x16x16f16 v[14:17], v[56:57], v[54:55], v[14:17]
+	.loc	1 298 22                        ; 03-matrix-multiplication.py:298:22
+	s_cbranch_scc1 .LBB0_3
+.LBB0_4:                                ; %._crit_edge
+	.loc	1 0 22 is_stmt 0                ; 03-matrix-multiplication.py:0:22
+	s_load_dword s0, s[4:5], 0x2c
+	.loc	1 304 35 is_stmt 1              ; 03-matrix-multiplication.py:304:35
+	s_andn2_b64 vcc, exec, s[6:7]
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	s_waitcnt lgkmcnt(0)
+	s_barrier
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_cbranch_vccnz .LBB0_6
+; %bb.5:
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	v_and_b32_e32 v18, 32, v30
+	v_lshlrev_b32_e32 v20, 5, v28
+	v_add_u32_e32 v18, 0, v18
+	v_add3_u32 v18, v18, v20, v29
+	ds_read_u16 v29, v18 offset:18816
+	ds_read_u16 v30, v18 offset:18688
+	ds_read_u16 v31, v18 offset:18560
+	ds_read_u16 v32, v18 offset:18432
+	ds_read_u16 v24, v18 offset:16768
+	ds_read_u16 v25, v18 offset:16640
+	ds_read_u16 v26, v18 offset:16512
+	ds_read_u16 v33, v18 offset:16384
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	v_lshrrev_b32_e32 v20, 1, v28
+	v_xor_b32_e32 v20, v27, v20
+	v_or3_b32 v34, v21, v23, v20
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_mov_b32 s1, 0x5040100
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	v_add_u32_e32 v20, 0, v34
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(2)
+	v_perm_b32 v37, v24, v25, s1
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	v_xad_u32 v24, v34, 32, 0
+	v_xad_u32 v28, v34, 64, 0
+	ds_read2st64_b64 v[20:23], v20 offset1:16
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(1)
+	v_perm_b32 v36, v26, v33, s1
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	ds_read2st64_b64 v[24:27], v24 offset1:16
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	v_perm_b32 v39, v29, v30, s1
+	v_perm_b32 v38, v31, v32, s1
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v32, v18 offset:20864
+	ds_read_u16 v33, v18 offset:20736
+	ds_read_u16 v35, v18 offset:20608
+	ds_read_u16 v40, v18 offset:20480
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	ds_read2st64_b64 v[28:31], v28 offset1:16
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v42, v18 offset:22912
+	ds_read_u16 v43, v18 offset:22784
+	ds_read_u16 v44, v18 offset:22656
+	ds_read_u16 v45, v18 offset:22528
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(7)
+	v_perm_b32 v41, v32, v33, s1
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	v_xor_b32_e32 v32, 0x60, v34
+	v_add_u32_e32 v32, 0, v32
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(5)
+	v_perm_b32 v40, v35, v40, s1
+	.loc	1 301 20                        ; 03-matrix-multiplication.py:301:20
+	ds_read2st64_b64 v[32:35], v32 offset1:16
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(3)
+	v_perm_b32 v43, v42, v43, s1
+	s_waitcnt lgkmcnt(1)
+	v_perm_b32 v42, v44, v45, s1
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v44, v18 offset:16704
+	ds_read_u16 v46, v18 offset:16576
+	ds_read_u16 v45, v18 offset:16832
+	ds_read_u16 v47, v18 offset:16448
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	v_mfma_f32_16x16x16f16 v[6:9], v[36:37], v[20:21], v[6:9]
+	s_waitcnt lgkmcnt(1)
+	v_perm_b32 v45, v45, v44, s1
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v44, v46, v47, s1
+	s_nop 1
+	v_mfma_f32_16x16x16f16 v[10:13], v[44:45], v[20:21], v[10:13]
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v20, v18 offset:18752
+	ds_read_u16 v46, v18 offset:18624
+	ds_read_u16 v21, v18 offset:18880
+	ds_read_u16 v47, v18 offset:18496
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(1)
+	v_perm_b32 v21, v21, v20, s1
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v20, v46, v47, s1
+	v_mfma_f32_16x16x16f16 v[2:5], v[36:37], v[22:23], v[2:5]
+	v_mfma_f32_16x16x16f16 v[14:17], v[44:45], v[22:23], v[14:17]
+	v_mfma_f32_16x16x16f16 v[6:9], v[38:39], v[24:25], v[6:9]
+	v_mfma_f32_16x16x16f16 v[10:13], v[20:21], v[24:25], v[10:13]
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v24, v18 offset:20800
+	ds_read_u16 v46, v18 offset:20672
+	ds_read_u16 v25, v18 offset:20928
+	ds_read_u16 v47, v18 offset:20544
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(1)
+	v_perm_b32 v25, v25, v24, s1
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v24, v46, v47, s1
+	v_mfma_f32_16x16x16f16 v[2:5], v[38:39], v[26:27], v[2:5]
+	v_mfma_f32_16x16x16f16 v[14:17], v[20:21], v[26:27], v[14:17]
+	v_mfma_f32_16x16x16f16 v[6:9], v[40:41], v[28:29], v[6:9]
+	v_mfma_f32_16x16x16f16 v[10:13], v[24:25], v[28:29], v[10:13]
+	.loc	1 302 20                        ; 03-matrix-multiplication.py:302:20
+	ds_read_u16 v28, v18 offset:22848
+	ds_read_u16 v46, v18 offset:22720
+	ds_read_u16 v29, v18 offset:22976
+	ds_read_u16 v18, v18 offset:22592
+	.loc	1 304 35                        ; 03-matrix-multiplication.py:304:35
+	s_waitcnt lgkmcnt(1)
+	v_perm_b32 v29, v29, v28, s1
+	s_waitcnt lgkmcnt(0)
+	v_perm_b32 v28, v46, v18, s1
+	v_mfma_f32_16x16x16f16 v[2:5], v[40:41], v[30:31], v[2:5]
+	v_mfma_f32_16x16x16f16 v[14:17], v[24:25], v[30:31], v[14:17]
+	v_mfma_f32_16x16x16f16 v[6:9], v[42:43], v[32:33], v[6:9]
+	v_mfma_f32_16x16x16f16 v[10:13], v[28:29], v[32:33], v[10:13]
+	v_mfma_f32_16x16x16f16 v[2:5], v[42:43], v[34:35], v[2:5]
+	v_mfma_f32_16x16x16f16 v[14:17], v[28:29], v[34:35], v[14:17]
+.LBB0_6:                                ; %._crit_edge._crit_edge
+	.loc	1 287 51                        ; 03-matrix-multiplication.py:287:51
+	v_lshrrev_b32_e32 v0, 2, v0
+	.loc	1 286 51                        ; 03-matrix-multiplication.py:286:51
+	v_lshrrev_b32_e32 v19, 3, v19
+	.loc	1 312 23                        ; 03-matrix-multiplication.py:312:23
+	s_nop 5
+	v_cvt_f16_f32_e32 v6, v6
+	v_cvt_f16_f32_e32 v7, v7
+	.loc	1 287 51                        ; 03-matrix-multiplication.py:287:51
+	v_and_b32_e32 v0, 28, v0
+	.loc	1 286 51                        ; 03-matrix-multiplication.py:286:51
+	v_or_b32_e32 v1, v19, v1
+	.loc	1 312 23                        ; 03-matrix-multiplication.py:312:23
+	v_cvt_f16_f32_e32 v8, v8
+	v_cvt_f16_f32_e32 v9, v9
+	.loc	1 318 21                        ; 03-matrix-multiplication.py:318:21
+	s_mul_i32 s1, s16, s0
+	.loc	1 287 38                        ; 03-matrix-multiplication.py:287:38
+	v_or_b32_e32 v21, s17, v0
+	.loc	1 286 38                        ; 03-matrix-multiplication.py:286:38
+	v_or_b32_e32 v19, s16, v1
+	.loc	1 318 52                        ; 03-matrix-multiplication.py:318:52
+	s_add_i32 s1, s1, s17
+	.loc	1 287 51                        ; 03-matrix-multiplication.py:287:51
+	v_or_b32_e32 v18, 32, v0
+	.loc	1 312 23                        ; 03-matrix-multiplication.py:312:23
+	v_cvt_f16_f32_e32 v10, v10
+	v_cvt_f16_f32_e32 v11, v11
+	v_cvt_f16_f32_e32 v12, v12
+	v_cvt_f16_f32_e32 v13, v13
+	.loc	1 318 52                        ; 03-matrix-multiplication.py:318:52
+	v_mul_lo_u32 v23, s0, v1
+	v_or_b32_e32 v25, s1, v0
+	.loc	1 319 33                        ; 03-matrix-multiplication.py:319:33
+	v_cmp_gt_i32_e32 vcc, s12, v19
+	.loc	1 319 58 is_stmt 0              ; 03-matrix-multiplication.py:319:58
+	v_cmp_gt_i32_e64 s[2:3], s13, v21
+	.loc	1 287 38 is_stmt 1              ; 03-matrix-multiplication.py:287:38
+	v_or_b32_e32 v20, s17, v18
+	.loc	1 312 23                        ; 03-matrix-multiplication.py:312:23
+	v_cvt_f16_f32_e32 v2, v2
+	v_cvt_f16_f32_e32 v3, v3
+	.loc	1 320 21                        ; 03-matrix-multiplication.py:320:21
+	v_pack_b32_f16 v0, v6, v7
+	v_add_lshl_u32 v6, v25, v23, 1
+	v_bfrev_b32_e32 v7, 1
+	.loc	1 319 39                        ; 03-matrix-multiplication.py:319:39
+	s_and_b64 s[6:7], vcc, s[2:3]
+	.loc	1 312 23                        ; 03-matrix-multiplication.py:312:23
+	v_cvt_f16_f32_e32 v4, v4
+	v_cvt_f16_f32_e32 v5, v5
+	.loc	1 318 52                        ; 03-matrix-multiplication.py:318:52
+	v_or_b32_e32 v18, s1, v18
+	.loc	1 319 58                        ; 03-matrix-multiplication.py:319:58
+	v_cmp_gt_i32_e64 s[4:5], s13, v20
+	.loc	1 320 21                        ; 03-matrix-multiplication.py:320:21
+	s_and_b32 s21, s21, 0xffff
+	s_mov_b32 s23, 0x27000
+	s_mov_b32 s22, 0x7ffffffe
+	v_pack_b32_f16 v1, v8, v9
+	v_cndmask_b32_e64 v6, v7, v6, s[6:7]
+	.loc	1 286 38                        ; 03-matrix-multiplication.py:286:38
+	v_or_b32_e32 v22, 64, v19
+	.loc	1 320 21                        ; 03-matrix-multiplication.py:320:21
+	buffer_store_dwordx2 v[0:1], v6, s[20:23], 0 offen
+	v_add_lshl_u32 v6, v18, v23, 1
+	.loc	1 319 39                        ; 03-matrix-multiplication.py:319:39
+	s_and_b64 vcc, vcc, s[4:5]
+	.loc	1 312 23                        ; 03-matrix-multiplication.py:312:23
+	v_cvt_f16_f32_e32 v14, v14
+	v_cvt_f16_f32_e32 v15, v15
+	v_cvt_f16_f32_e32 v16, v16
+	v_cvt_f16_f32_e32 v17, v17
+	.loc	1 318 52                        ; 03-matrix-multiplication.py:318:52
+	v_lshl_add_u32 v24, s0, 6, v23
+	.loc	1 319 33                        ; 03-matrix-multiplication.py:319:33
+	v_cmp_gt_i32_e64 s[0:1], s12, v22
+	.loc	1 320 21                        ; 03-matrix-multiplication.py:320:21
+	v_pack_b32_f16 v1, v12, v13
+	v_pack_b32_f16 v0, v10, v11
+	v_cndmask_b32_e32 v6, v7, v6, vcc
+	buffer_store_dwordx2 v[0:1], v6, s[20:23], 0 offen
+	v_pack_b32_f16 v0, v2, v3
+	v_add_lshl_u32 v2, v25, v24, 1
+	.loc	1 319 39                        ; 03-matrix-multiplication.py:319:39
+	s_and_b64 vcc, s[0:1], s[2:3]
+	.loc	1 320 21                        ; 03-matrix-multiplication.py:320:21
+	v_pack_b32_f16 v1, v4, v5
+	v_cndmask_b32_e32 v2, v7, v2, vcc
+	buffer_store_dwordx2 v[0:1], v2, s[20:23], 0 offen
+	v_add_lshl_u32 v2, v18, v24, 1
+	.loc	1 319 39                        ; 03-matrix-multiplication.py:319:39
+	s_and_b64 vcc, s[0:1], s[4:5]
+	.loc	1 320 21                        ; 03-matrix-multiplication.py:320:21
+	v_pack_b32_f16 v1, v16, v17
+	v_pack_b32_f16 v0, v14, v15
+	v_cndmask_b32_e32 v2, v7, v2, vcc
+	buffer_store_dwordx2 v[0:1], v2, s[20:23], 0 offen
+	.loc	1 320 4 is_stmt 0               ; 03-matrix-multiplication.py:320:4
+	s_endpgm
+.Ltmp13:
+	.section	.rodata,"a",@progbits
+	.p2align	6, 0x0
+	.amdhsa_kernel matmul_kernel
+		.amdhsa_group_segment_fixed_size 0
+		.amdhsa_private_segment_fixed_size 0
+		.amdhsa_kernarg_size 64
+		.amdhsa_user_sgpr_count 16
+		.amdhsa_user_sgpr_private_segment_buffer 1
+		.amdhsa_user_sgpr_dispatch_ptr 0
+		.amdhsa_user_sgpr_queue_ptr 0
+		.amdhsa_user_sgpr_kernarg_segment_ptr 1
+		.amdhsa_user_sgpr_dispatch_id 0
+		.amdhsa_user_sgpr_flat_scratch_init 0
+		.amdhsa_user_sgpr_kernarg_preload_length 10
+		.amdhsa_user_sgpr_kernarg_preload_offset 0
+		.amdhsa_user_sgpr_private_segment_size 0
+		.amdhsa_uses_dynamic_stack 0
+		.amdhsa_system_sgpr_private_segment_wavefront_offset 0
+		.amdhsa_system_sgpr_workgroup_id_x 1
+		.amdhsa_system_sgpr_workgroup_id_y 0
+		.amdhsa_system_sgpr_workgroup_id_z 0
+		.amdhsa_system_sgpr_workgroup_info 0
+		.amdhsa_system_vgpr_workitem_id 0
+		.amdhsa_next_free_vgpr 62
+		.amdhsa_next_free_sgpr 26
+		.amdhsa_accum_offset 64
+		.amdhsa_reserve_vcc 1
+		.amdhsa_reserve_flat_scratch 0
+		.amdhsa_reserve_xnack_mask 1
+		.amdhsa_float_round_mode_32 0
+		.amdhsa_float_round_mode_16_64 0
+		.amdhsa_float_denorm_mode_32 3
+		.amdhsa_float_denorm_mode_16_64 3
+		.amdhsa_dx10_clamp 1
+		.amdhsa_ieee_mode 1
+		.amdhsa_fp16_overflow 0
+		.amdhsa_tg_split 0
+		.amdhsa_exception_fp_ieee_invalid_op 0
+		.amdhsa_exception_fp_denorm_src 0
+		.amdhsa_exception_fp_ieee_div_zero 0
+		.amdhsa_exception_fp_ieee_overflow 0
+		.amdhsa_exception_fp_ieee_underflow 0
+		.amdhsa_exception_fp_ieee_inexact 0
+		.amdhsa_exception_int_div_zero 0
+	.end_amdhsa_kernel
+	.text
+.Lfunc_end0:
+	.size	matmul_kernel, .Lfunc_end0-matmul_kernel
+	.cfi_endproc
+                                        ; -- End function
+	.set matmul_kernel.num_vgpr, 62
+	.set matmul_kernel.num_agpr, 0
+	.set matmul_kernel.numbered_sgpr, 26
+	.set matmul_kernel.num_named_barrier, 0
+	.set matmul_kernel.private_seg_size, 0
+	.set matmul_kernel.uses_vcc, 1
+	.set matmul_kernel.uses_flat_scratch, 0
+	.set matmul_kernel.has_dyn_sized_stack, 0
+	.set matmul_kernel.has_recursion, 0
+	.set matmul_kernel.has_indirect_call, 0
+	.section	.AMDGPU.csdata,"",@progbits
+; Kernel info:
+; codeLenInByte = 3948
+; TotalNumSgprs: 30
+; NumVgprs: 62
+; NumAgprs: 0
+; TotalNumVgprs: 62
+; ScratchSize: 0
+; MemoryBound: 0
+; FloatMode: 240
+; IeeeMode: 1
+; LDSByteSize: 0 bytes/workgroup (compile time only)
+; SGPRBlocks: 3
+; VGPRBlocks: 7
+; NumSGPRsForWavesPerEU: 30
+; NumVGPRsForWavesPerEU: 62
+; AccumOffset: 64
+; Occupancy: 8
+; WaveLimiterHint : 0
+; COMPUTE_PGM_RSRC2:SCRATCH_EN: 0
+; COMPUTE_PGM_RSRC2:USER_SGPR: 16
+; COMPUTE_PGM_RSRC2:TRAP_HANDLER: 0
+; COMPUTE_PGM_RSRC2:TGID_X_EN: 1
+; COMPUTE_PGM_RSRC2:TGID_Y_EN: 0
+; COMPUTE_PGM_RSRC2:TGID_Z_EN: 0
+; COMPUTE_PGM_RSRC2:TIDIG_COMP_CNT: 0
+; COMPUTE_PGM_RSRC3_GFX90A:ACCUM_OFFSET: 15
+; COMPUTE_PGM_RSRC3_GFX90A:TG_SPLIT: 0
+	.text
+	.p2alignl 6, 3212836864
+	.fill 256, 4, 3212836864
+	.section	.AMDGPU.gpr_maximums,"",@progbits
+	.set amdgpu.max_num_vgpr, 0
+	.set amdgpu.max_num_agpr, 0
+	.set amdgpu.max_num_sgpr, 0
+	.text
+	.section	.debug_abbrev,"",@progbits
+	.byte	1                               ; Abbreviation Code
+	.byte	17                              ; DW_TAG_compile_unit
+	.byte	1                               ; DW_CHILDREN_yes
+	.byte	37                              ; DW_AT_producer
+	.byte	14                              ; DW_FORM_strp
+	.byte	19                              ; DW_AT_language
+	.byte	5                               ; DW_FORM_data2
+	.byte	3                               ; DW_AT_name
+	.byte	14                              ; DW_FORM_strp
+	.byte	16                              ; DW_AT_stmt_list
+	.byte	23                              ; DW_FORM_sec_offset
+	.byte	27                              ; DW_AT_comp_dir
+	.byte	14                              ; DW_FORM_strp
+	.byte	17                              ; DW_AT_low_pc
+	.byte	1                               ; DW_FORM_addr
+	.byte	18                              ; DW_AT_high_pc
+	.byte	6                               ; DW_FORM_data4
+	.byte	0                               ; EOM(1)
+	.byte	0                               ; EOM(2)
+	.byte	2                               ; Abbreviation Code
+	.byte	46                              ; DW_TAG_subprogram
+	.byte	0                               ; DW_CHILDREN_no
+	.byte	3                               ; DW_AT_name
+	.byte	14                              ; DW_FORM_strp
+	.byte	32                              ; DW_AT_inline
+	.byte	11                              ; DW_FORM_data1
+	.byte	0                               ; EOM(1)
+	.byte	0                               ; EOM(2)
+	.byte	3                               ; Abbreviation Code
+	.byte	46                              ; DW_TAG_subprogram
+	.byte	1                               ; DW_CHILDREN_yes
+	.byte	17                              ; DW_AT_low_pc
+	.byte	1                               ; DW_FORM_addr
+	.byte	18                              ; DW_AT_high_pc
+	.byte	6                               ; DW_FORM_data4
+	.byte	49                              ; DW_AT_abstract_origin
+	.byte	19                              ; DW_FORM_ref4
+	.byte	0                               ; EOM(1)
+	.byte	0                               ; EOM(2)
+	.byte	4                               ; Abbreviation Code
+	.byte	29                              ; DW_TAG_inlined_subroutine
+	.byte	0                               ; DW_CHILDREN_no
+	.byte	49                              ; DW_AT_abstract_origin
+	.byte	19                              ; DW_FORM_ref4
+	.byte	17                              ; DW_AT_low_pc
+	.byte	1                               ; DW_FORM_addr
+	.byte	18                              ; DW_AT_high_pc
+	.byte	6                               ; DW_FORM_data4
+	.byte	88                              ; DW_AT_call_file
+	.byte	11                              ; DW_FORM_data1
+	.byte	89                              ; DW_AT_call_line
+	.byte	5                               ; DW_FORM_data2
+	.byte	87                              ; DW_AT_call_column
+	.byte	11                              ; DW_FORM_data1
+	.byte	0                               ; EOM(1)
+	.byte	0                               ; EOM(2)
+	.byte	5                               ; Abbreviation Code
+	.byte	29                              ; DW_TAG_inlined_subroutine
+	.byte	0                               ; DW_CHILDREN_no
+	.byte	49                              ; DW_AT_abstract_origin
+	.byte	19                              ; DW_FORM_ref4
+	.byte	85                              ; DW_AT_ranges
+	.byte	23                              ; DW_FORM_sec_offset
+	.byte	88                              ; DW_AT_call_file
+	.byte	11                              ; DW_FORM_data1
+	.byte	89                              ; DW_AT_call_line
+	.byte	5                               ; DW_FORM_data2
+	.byte	87                              ; DW_AT_call_column
+	.byte	11                              ; DW_FORM_data1
+	.byte	0                               ; EOM(1)
+	.byte	0                               ; EOM(2)
+	.byte	0                               ; EOM(3)
+	.section	.debug_info,"",@progbits
+.Lcu_begin0:
+	.long	.Ldebug_info_end0-.Ldebug_info_start0 ; Length of Unit
+.Ldebug_info_start0:
+	.short	4                               ; DWARF version number
+	.long	.debug_abbrev                   ; Offset Into Abbrev. Section
+	.byte	8                               ; Address Size (in bytes)
+	.byte	1                               ; Abbrev [1] 0xb:0x67 DW_TAG_compile_unit
+	.long	.Linfo_string0                  ; DW_AT_producer
+	.short	2                               ; DW_AT_language
+	.long	.Linfo_string1                  ; DW_AT_name
+	.long	.Lline_table_start0             ; DW_AT_stmt_list
+	.long	.Linfo_string2                  ; DW_AT_comp_dir
+	.quad	.Lfunc_begin0                   ; DW_AT_low_pc
+	.long	.Lfunc_end0-.Lfunc_begin0       ; DW_AT_high_pc
+	.byte	2                               ; Abbrev [2] 0x2a:0x6 DW_TAG_subprogram
+	.long	.Linfo_string3                  ; DW_AT_name
+	.byte	1                               ; DW_AT_inline
+	.byte	3                               ; Abbrev [3] 0x30:0x41 DW_TAG_subprogram
+	.quad	.Lfunc_begin0                   ; DW_AT_low_pc
+	.long	.Lfunc_end0-.Lfunc_begin0       ; DW_AT_high_pc
+	.long	42                              ; DW_AT_abstract_origin
+	.byte	4                               ; Abbrev [4] 0x41:0x15 DW_TAG_inlined_subroutine
+	.long	42                              ; DW_AT_abstract_origin
+	.quad	.Ltmp1                          ; DW_AT_low_pc
+	.long	.Ltmp2-.Ltmp1                   ; DW_AT_high_pc
+	.byte	1                               ; DW_AT_call_file
+	.short	258                             ; DW_AT_call_line
+	.byte	27                              ; DW_AT_call_column
+	.byte	5                               ; Abbrev [5] 0x56:0xd DW_TAG_inlined_subroutine
+	.long	42                              ; DW_AT_abstract_origin
+	.long	.Ldebug_ranges0                 ; DW_AT_ranges
+	.byte	1                               ; DW_AT_call_file
+	.short	257                             ; DW_AT_call_line
+	.byte	27                              ; DW_AT_call_column
+	.byte	5                               ; Abbrev [5] 0x63:0xd DW_TAG_inlined_subroutine
+	.long	42                              ; DW_AT_abstract_origin
+	.long	.Ldebug_ranges1                 ; DW_AT_ranges
+	.byte	1                               ; DW_AT_call_file
+	.short	298                             ; DW_AT_call_line
+	.byte	33                              ; DW_AT_call_column
+	.byte	0                               ; End Of Children Mark
+	.byte	0                               ; End Of Children Mark
+.Ldebug_info_end0:
+	.section	.debug_ranges,"",@progbits
+.Ldebug_ranges0:
+	.quad	.Ltmp3-.Lfunc_begin0
+	.quad	.Ltmp4-.Lfunc_begin0
+	.quad	.Ltmp5-.Lfunc_begin0
+	.quad	.Ltmp6-.Lfunc_begin0
+	.quad	.Ltmp7-.Lfunc_begin0
+	.quad	.Ltmp8-.Lfunc_begin0
+	.quad	0
+	.quad	0
+.Ldebug_ranges1:
+	.quad	.Ltmp9-.Lfunc_begin0
+	.quad	.Ltmp10-.Lfunc_begin0
+	.quad	.Ltmp11-.Lfunc_begin0
+	.quad	.Ltmp12-.Lfunc_begin0
+	.quad	0
+	.quad	0
+	.section	.debug_str,"MS",@progbits,1
+.Linfo_string0:
+	.asciz	"triton"                        ; string offset=0
+.Linfo_string1:
+	.asciz	"03-matrix-multiplication.py"   ; string offset=7
+.Linfo_string2:
+	.asciz	"/scratch/project_462001433/hui/gpu-perf/tutorials/." ; string offset=35
+.Linfo_string3:
+	.asciz	"matmul_kernel"                 ; string offset=87
+	.section	".note.GNU-stack","",@progbits
+	.amdgpu_metadata
+---
+amdhsa.kernels:
+  - .agpr_count:     0
+    .args:
+      - .address_space:  global
+        .offset:         0
+        .size:           8
+        .value_kind:     global_buffer
+      - .address_space:  global
+        .offset:         8
+        .size:           8
+        .value_kind:     global_buffer
+      - .address_space:  global
+        .offset:         16
+        .size:           8
+        .value_kind:     global_buffer
+      - .offset:         24
+        .size:           4
+        .value_kind:     by_value
+      - .offset:         28
+        .size:           4
+        .value_kind:     by_value
+      - .offset:         32
+        .size:           4
+        .value_kind:     by_value
+      - .offset:         36
+        .size:           4
+        .value_kind:     by_value
+      - .offset:         40
+        .size:           4
+        .value_kind:     by_value
+      - .offset:         44
+        .size:           4
+        .value_kind:     by_value
+      - .address_space:  global
+        .offset:         48
+        .size:           8
+        .value_kind:     global_buffer
+      - .address_space:  global
+        .offset:         56
+        .size:           8
+        .value_kind:     global_buffer
+    .group_segment_fixed_size: 0
+    .kernarg_segment_align: 8
+    .kernarg_segment_size: 64
+    .max_flat_workgroup_size: 512
+    .name:           matmul_kernel
+    .private_segment_fixed_size: 0
+    .sgpr_count:     30
+    .sgpr_spill_count: 0
+    .symbol:         matmul_kernel.kd
+    .uniform_work_group_size: 1
+    .uses_dynamic_stack: false
+    .vgpr_count:     62
+    .vgpr_spill_count: 0
+    .wavefront_size: 64
+amdhsa.target:   amdgcn-amd-amdhsa--gfx90a
+amdhsa.version:
+  - 1
+  - 2
+...
+
+	.end_amdgpu_metadata
+	.section	.debug_line,"",@progbits
+.Lline_table_start0:
