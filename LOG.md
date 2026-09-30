@@ -1,0 +1,31 @@
+## Day 1
+
+1. Occupancy: right idea, but two missing pieces
+
+    You named one limit, shared memory (LDS on AMD). A small correction: LDS is allocated per workgroup (a block of wavefronts), not per wavefront. There are three limits, and whichever is tightest wins:
+
+    Limit	MI250X	Charged per
+    Registers (VGPRs)	512 per lane on each SIMD	wavefront
+    LDS	64 KB per CU	workgroup
+    Hardware wave slots	8 per SIMD	fixed cap
+
+    For GEMM kernels on AMD, registers are usually the binding limit, not LDS. A worked example: a kernel using 128 VGPRs fits 512 / 128 = 4 waves per SIMD. If its workgroup of 4 waves also uses 32 KB of LDS, only 2 workgroups fit per CU. That's 8 waves across 4 SIMDs, so 2 per SIMD. LDS wins, and occupancy is 2.
+
+    You also skipped why occupancy matters. When one wavefront waits hundreds of cycles for memory, the SIMD switches to another resident wavefront. More waves means more latency hidden. You'll compute exactly this for your own kernel on Day 4.
+
+2. Tiling: right conclusion, slightly off mechanism
+
+    It's not "back and forth". Each value makes one trip from HBM into LDS, then gets reused many times from there. The win is fewer total bytes read from HBM. Here's the arithmetic that makes it concrete. For a BM × BN tile, each step along K loads (BM + BN) × BK values and does 2 × BM × BN × BK FLOPs, so in FP16:
+
+    intensity ≈ BM·BN / (BM + BN) FLOP/byte
+    32 × 32 tile: 16 FLOP/byte
+    128 × 128 tile: 64 FLOP/byte
+    ridge point on MI250X: about 120
+
+    Geometrically, a bigger tile slides your kernel right along the roofline, out of the memory-bound region. That's your v0 vs v1 story for Day 3, already worked out.
+
+3. Memory vs compute bound: correct, with one reversed cause and one missing case
+
+    The causality is reversed. Low arithmetic intensity isn't caused by the bandwidth limit. It's a property of the algorithm (FLOPs per byte), and it's what makes the kernel bandwidth-bound. Place the kernel by its intensity first, then read off which roof caps it.
+    The missing case: many kernels sit well below both roofs. They're latency-bound, from low occupancy, too few tiles to fill 110 CUs, or launch overhead. Your small and decode shapes will land there. The roofline tells you the gap exists; profiling tells you why.
+    Vocabulary: on AMD, say "Matrix Cores" or "MFMA", not tensor cores. AMD interviewers notice.
