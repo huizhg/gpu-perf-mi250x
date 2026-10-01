@@ -1,0 +1,15 @@
+{
+  "bandwidth_TBs": 1.257,
+  "matmul_TFLOPS": 107.0,
+  "bandwidth_runs": [
+    1.26,
+    1.257,
+    1.257
+  ],
+  "matmul_runs": [
+    107.4,
+    107.0,
+    106.8
+  ],
+  "versions": "torch 2.10.0+rocm7.0 hip 7.0.51831 triton 3.6.0"
+}

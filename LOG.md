@@ -26,7 +26,25 @@ GPUs   1 AMD Instinct MI250X
     intensity ≈ BM·BN / (BM + BN) FLOP/byte
     32 × 32 tile: 16 FLOP/byte
     128 × 128 tile: 64 FLOP/byte
-    ridge point on MI250X: about 120
+    ridge point on MI250X: about 120 
+
+    {
+  "bandwidth_TBs": 1.257,
+  "matmul_TFLOPS": 107.0,
+  "bandwidth_runs": [
+    1.26,
+    1.257,
+    1.257
+  ],
+  "matmul_runs": [
+    107.4,
+    107.0,
+    106.8
+  ],
+  "versions": "torch 2.10.0+rocm7.0 hip 7.0.51831 triton 3.6.0"
+}
+
+measured ridge point: matmul TFlops / bandwidth (tb/s) = 107/1.257 = 85
 
     Geometrically, a bigger tile slides your kernel right along the roofline, out of the memory-bound region. That's your v0 vs v1 story for Day 3, already worked out.
 
@@ -69,3 +87,6 @@ matmul-performance-fp16:
 28  3840.0  3840.0  3840.0        111.452926        91.338413
 29  3968.0  3968.0  3968.0        104.237234        95.939239
 30  4096.0  4096.0  4096.0         98.972785        93.367901
+
+### End of Day 1
+Done
