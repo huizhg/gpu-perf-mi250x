@@ -90,3 +90,9 @@ matmul-performance-fp16:
 
 ### End of Day 1
 Done
+
+## Day 2
+1, the four decode points sit on the left of the ridge point, they are memory-bound. 
+2. I think the square matmul with shape 512 * 512, (the smallest tested shape) is furtheset below the roof, like 30% under the roof on the right of the ridge point. 
+3. the small square shapes (512, 1024) sit under the roof but the big matrix (4096, 8192) sit near the roof. which is because the small matrix does not fill the 110 compute unit on the gpu, most of them are sitting idle for small shape matmul. 
+4. there are two prefill matmul sit above the roof. shape :11008,4096. They are big matmul, I think it is because the ceiling measurement was too low, because what i set the ceiling shape is: 8192, 8192, which is smaller than the prefill shape 11008, 4096. 
