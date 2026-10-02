@@ -16,6 +16,7 @@ out = sys.argv[-1]                # output PNG
 fig, ax = plt.subplots(figsize=(8, 5.5))
 ai = np.logspace(-0.5, 4, 300)
 ax.plot(ai, np.minimum(PEAK, ai * BW), color="black", lw=2, label="measured roof")
+ax.plot(ai, np.minimum(191.5, ai * 1.6), color="gray", ls="--", lw=1, label="datasheet roof")
 ax.axvline(RIDGE, color="gray", ls=":", lw=1)
 ax.text(RIDGE * 1.1, PEAK * 0.03, f"ridge ≈ {RIDGE:.0f} FLOP/B", color="gray")
 

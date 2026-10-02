@@ -1,15 +1,22 @@
 {
-  "bandwidth_TBs": 1.257,
-  "matmul_TFLOPS": 107.0,
+  "bandwidth_TBs": 1.249,
+  "matmul_TFLOPS": 115.3,
   "bandwidth_runs": [
-    1.26,
-    1.257,
-    1.257
+    1.25,
+    1.249,
+    1.249
   ],
   "matmul_runs": [
-    107.4,
-    107.0,
-    106.8
+    109.7,
+    107.5,
+    113.5,
+    115.3
   ],
-  "versions": "torch 2.10.0+rocm7.0 hip 7.0.51831 triton 3.6.0"
+  "versions": "torch 2.10.0+rocm7.0 hip 7.0.51831 triton 3.6.0",
+  "matmul_by_shape": {
+    "8192x8192x8192": 109.7,
+    "4096x4096x8192": 107.5,
+    "2048x11008x4096": 113.5,
+    "3840x3840x3840": 115.3
+  }
 }

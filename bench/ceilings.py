@@ -10,19 +10,23 @@ for _ in range(3):
     bw_runs.append(2 * x.numel() * 2 / ms / 1e9)      # (read + write) x 2 bytes -> TB/s
 
 # Compute: a large square GEMM, where rocBLAS is at its best.
-a = torch.randn(8192, 8192, device="cuda", dtype=torch.float16)
-b = torch.randn_like(a)
-mm_runs = []
-for _ in range(3):
-    ms = time_ms(lambda: a @ b)
-    mm_runs.append(2 * 8192**3 / ms / 1e9)             # TFLOPS
+# Compute: best rocBLAS speed over several large shapes. An empirical roof, not a hardware limit.
+COMPUTE_SHAPES = [(8192, 8192, 8192), (4096, 4096, 8192), (2048, 11008, 4096), (3840, 3840, 3840)]
+by_shape = {}
+for M, N, K in COMPUTE_SHAPES:
+    a = torch.randn(M, K, device="cuda", dtype=torch.float16)
+    b = torch.randn(K, N, device="cuda", dtype=torch.float16)
+    runs = [2 * M * N * K / time_ms(lambda: a @ b) / 1e9 for _ in range(3)]
+    by_shape[f"{M}x{N}x{K}"] = round(statistics.median(runs), 1)
+mm_runs = list(by_shape.values())           # TFLOPS
 
 result = {
     "bandwidth_TBs": round(statistics.median(bw_runs), 3),
-    "matmul_TFLOPS": round(statistics.median(mm_runs), 1),
+    "matmul_TFLOPS": max(mm_runs),
     "bandwidth_runs": [round(v, 3) for v in bw_runs],
     "matmul_runs": [round(v, 1) for v in mm_runs],
     "versions": versions(),
+    "matmul_by_shape": by_shape
 }
 print(json.dumps(result, indent=2))
 json.dump(result, open("results/ceilings.json", "w"), indent=2)

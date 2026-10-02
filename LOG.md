@@ -96,3 +96,59 @@ Done
 2. I think the square matmul with shape 512 * 512, (the smallest tested shape) is furtheset below the roof, like 30% under the roof on the right of the ridge point. 
 3. the small square shapes (512, 1024) sit under the roof but the big matrix (4096, 8192) sit near the roof. which is because the small matrix does not fill the 110 compute unit on the gpu, most of them are sitting idle for small shape matmul. 
 4. there are two prefill matmul sit above the roof. shape :11008,4096. They are big matmul, I think it is because the ceiling measurement was too low, because what i set the ceiling shape is: 8192, 8192, which is smaller than the prefill shape 11008, 4096. 
+
+(answer corrected by claude:
+ 1. Decode: correct, and there's more in it. They're memory-bound, yes. Now look closer at whether they sit on the slope. One M = 1 point reaches about 90% of the bandwidth line, but the other three sit at roughly 55%. A likely reason: a memory-bound kernel only pulls bandwidth through the CUs that are working. With 128-wide tiles, N = 4096 gives just 32 tiles for 110 CUs, so most CUs can't help fetch data. The usual fix is split-K: cut the K dimension into pieces so more workgroups run at once. That's exactly what the wvSplitK kernel you saw in your vLLM traces does. Check your CSV for which M = 1 shape is the 90% one; Day 5 will show which kernels rocBLAS picked.
+
+2. Right shape, wrong size. 512 is the furthest below the roof, but it's about 7× below, not 30%. The point sits near 15 TFLOPS against a roof of 107. On log axes, each major gridline is 10×, so always read ratios, never distances. One more cause on top of your answer: 512³ takes only about 18 µs, and launching a kernel costs a few µs on its own, so fixed overhead eats a big share of the time.
+
+3. Correct. In numbers: with 128 × 128 tiles, 512 gives 16 tiles and 1024 gives 64, both below 110 CUs.
+
+4. Good catch, and you're half right about why. It isn't about size. rocBLAS's speed depends on how well a shape fits its tile choices and the 110 CUs, and 2048 × 11008 × 4096 simply fits better than 8192³. Your "compute roof" was never a hardware limit, just rocBLAS's best result on one shape. That's called an empirical roofline. Tomorrow's Step 0 fixes it: take the best over four large shapes, and add the datasheet roof as a dashed line. 
+
+One fix in your log: 107 TFLOPS is 56% of the 191.5 datasheet peak, not 89%. And fill in "Surprised me" before you close the day. Your answer to question 4 is a perfect candidate.
+)
+
+### End of day 2: 
+ ### End of day 2
+- Ceilings: BW 1.257 TB/s (78% of datasheet), matmul 107 TFLOPS (89%), ridge 85 FLOP/B
+- Furthest below the roof: 
+- Surprised me:
+- Stuck on:
+- First step tomorrow: read MLC Data Layout + Tiled GEMM steps 1-3
+
+
+## Day 3
+ the compare table
+
+square      512x   512x   512  rocBLAS   15.11   triton_v0    9.75 (  65%)   triton_v1    6.93 (  46%)
+square     1024x  1024x  1024  rocBLAS   47.26   triton_v0   17.52 (  37%)   triton_v1   32.90 (  70%)
+square     2048x  2048x  2048  rocBLAS   87.37   triton_v0   20.81 (  24%)   triton_v1   72.45 (  83%)
+square     4096x  4096x  4096  rocBLAS  101.10   triton_v0   19.18 (  19%)   triton_v1   90.43 (  89%)
+square     8192x  8192x  8192  rocBLAS  106.30   triton_v0   19.50 (  18%)   triton_v1   76.28 (  72%)
+prefill    2048x  4096x  4096  rocBLAS  105.01   triton_v0   19.49 (  19%)   triton_v1   88.45 (  84%)
+prefill    2048x 11008x  4096  rocBLAS  111.17   triton_v0   14.97 (  13%)   triton_v1   93.15 (  84%)
+prefill    2048x  4096x 11008  rocBLAS  112.12   triton_v0   18.18 (  16%)   triton_v1   92.11 (  82%)
+decode        1x  4096x  4096  rocBLAS    0.69   triton_v0    0.29 (  42%)   triton_v1    0.18 (  26%)
+decode        4x  4096x  4096  rocBLAS    2.72   triton_v0    1.16 (  43%)   triton_v1    0.70 (  26%)
+decode       16x  4096x  4096  rocBLAS   10.69   triton_v0    4.54 (  42%)   triton_v1    2.79 (  26%)
+decode        1x 11008x  4096  rocBLAS    1.13   triton_v0    0.57 (  50%)   triton_v1    0.45 (  40%)
+esm        1024x  3840x  1280  rocBLAS   76.35   triton_v0   20.83 (  27%)   triton_v1   62.73 (  82%)
+esm        1024x  1280x  1280  rocBLAS   61.14   triton_v0   19.42 (  32%)   triton_v1   42.11 (  69%)
+esm        1024x  5120x  1280  rocBLAS   83.47   triton_v0   21.03 (  25%)   triton_v1   76.26 (  91%)
+esm        1024x  1280x  5120  rocBLAS   88.02   triton_v0   20.55 (  23%)   triton_v1   51.24 (  58%)
+odd        1000x  1000x  1000  rocBLAS   39.18   triton_v0   13.97 (  36%)   triton_v1   18.38 (  47%)
+odd        3000x  2000x  1500  rocBLAS   76.50   triton_v0   18.46 (  24%)   triton_v1   63.77 (  83%)
+
+### End of Day 3
+1. What is v1's speedup over v0 at 4096, and does the tile-intensity idea explain it?
+2. Compare each version's measured TFLOPS at 4096 with its prediction (20 and 80). If a version beats its prediction, some loads didn't come from HBM. Where could they come from? Hint: the MI250X has an 8 MB L2 cache per GCD.
+3. Find a shape where v0 beats v1. (Look at decode.) Explain it by counting tiles against 110 CUs, as in the Day 2 lesson.
+
+### End of day 3
+- Tests: 36/36 passed
+- v1 at 4096: 90.43 TFLOPS (89% of rocBLAS), v0: 19%
+- Shape where v0 beats v1: decode shapes and the 512 512 square 
+- Surprised me: I set the a_ptr += wrong.  wrote this in the beginning: a_ptrs += offs_k[None, : ] * s_ak
+- Stuck on: stuck on understanding the pointer grids, how program is handing data. 
+- First step tomorrow: read ROCm "Optimizing Triton kernels"
