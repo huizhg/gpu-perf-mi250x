@@ -1,0 +1,522 @@
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (512, 512, 512, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 9.54s,
+best config selected: BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 square      512    512    512    0.0197 ms    13.64 TFLOPS   0.080 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (1024, 1024, 1024, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 2.72s,
+best config selected: BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 square     1024   1024   1024    0.0475 ms    45.19 TFLOPS   0.132 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (2048, 2048, 2048, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 2.90s,
+best config selected: BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 square     2048   2048   2048    0.2261 ms    75.99 TFLOPS   0.111 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (4096, 4096, 4096, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 3.32s,
+best config selected: BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 square     4096   4096   4096    1.4445 ms    95.15 TFLOPS   0.070 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (8192, 8192, 8192, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 6.23s,
+best config selected: BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 square     8192   8192   8192   10.7491 ms   102.29 TFLOPS   0.037 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (2048, 4096, 4096, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 3.14s,
+best config selected: BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 prefill    2048   4096   4096    0.7599 ms    90.44 TFLOPS   0.088 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (2048, 11008, 4096, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 3.44s,
+best config selected: BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 prefill    2048  11008   4096    1.9564 ms    94.40 TFLOPS   0.078 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (2048, 4096, 11008, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 3.48s,
+best config selected: BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 prefill    2048   4096  11008    1.9789 ms    93.33 TFLOPS   0.077 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (1, 4096, 4096, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 7.24s,
+best config selected: BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 decode        1   4096   4096    0.0768 ms     0.44 TFLOPS   0.437 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (4, 4096, 4096, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 6.71s,
+best config selected: BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 decode        4   4096   4096    0.0770 ms     1.74 TFLOPS   0.437 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (16, 4096, 4096, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 2.77s,
+best config selected: BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 decode       16   4096   4096    0.0773 ms     6.95 TFLOPS   0.438 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (1, 11008, 4096, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 2.80s,
+best config selected: BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 decode        1  11008   4096    0.1002 ms     0.90 TFLOPS   0.901 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (1024, 3840, 1280, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 2.85s,
+best config selected: BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 esm        1024   3840   1280    0.1474 ms    68.31 TFLOPS   0.138 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (1024, 1280, 1280, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 2.74s,
+best config selected: BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 esm        1024   1280   1280    0.0570 ms    58.91 TFLOPS   0.150 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (1024, 5120, 1280, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 2.87s,
+best config selected: BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 esm        1024   5120   1280    0.1670 ms    80.35 TFLOPS   0.157 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (1024, 1280, 5120, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 2.88s,
+best config selected: BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 esm        1024   1280   5120    0.1798 ms    74.63 TFLOPS   0.146 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (1000, 1000, 1000, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 7.32s,
+best config selected: BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 odd        1000   1000   1000    0.0754 ms    26.54 TFLOPS   0.080 TB/s
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 32, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 64, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 128, BLOCK_N: 256, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None
+Autotuning kernel gemm_kernel_v2 with config BLOCK_M: 256, BLOCK_N: 128, BLOCK_K: 64, GROUP_M: 8, num_warps: 8, num_ctas: 1, num_stages: 2, maxnreg: None
+Triton autotuning for function gemm_kernel_v2,
+with key as (3000, 2000, 1500, 'torch.float16', 'torch.float16', 'torch.float16'),
+finished after 7.97s,
+best config selected: BLOCK_M: 64, BLOCK_N: 128, BLOCK_K: 32, GROUP_M: 8, num_warps: 4, num_ctas: 1, num_stages: 2, maxnreg: None;
+triton_v3 odd        3000   2000   1500    0.2754 ms    65.37 TFLOPS   0.098 TB/s

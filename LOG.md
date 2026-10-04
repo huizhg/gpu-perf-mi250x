@@ -142,8 +142,15 @@ odd        3000x  2000x  1500  rocBLAS   76.50   triton_v0   18.46 (  24%)   tri
 
 ### End of Day 3
 1. What is v1's speedup over v0 at 4096, and does the tile-intensity idea explain it?
+v1 is 4.7× faster than v0 at 4096³. Tile intensity predicts 4×: v1's 128×128 tiles give 64 FLOP/byte, v0's 32×32 tiles give 16. Both kernels are bandwidth-bound, so 4× more reuse per byte gives roughly 4× more FLOPS.
 2. Compare each version's measured TFLOPS at 4096 with its prediction (20 and 80). If a version beats its prediction, some loads didn't come from HBM. Where could they come from? Hint: the MI250X has an 8 MB L2 cache per GCD.
+TFLOPS = bandwidth roof times intensity: 
+v0 =  16 x 1.257 = 20; v1 = 64 x 1.257 = 80 . what measured at v0 for 4096 is around 20, 19.18 is just below the roof. but for v1, 90.43 is above the roof (80). 90.43 / 64 = 1.41 TB/s is above the bandwidth of HBM. which is a sing that v1 used memory that is faster than HBM. So some loads came from somewhere faster: the L2 cache. Programs that work on tiles in the same row all need the same strip of A. Programs in the same column all need the same strip of B. The first program fetches a strip from HBM. When a neighbour asks for the same strip soon after, it is still in the 8 MB L2, so the fetch never reaches HBM. This also explains the drop at 8192: the strips become too large to stay in L2 between reuses. 
+but why v0 didn't break the hbm bandwidth? why it uses L2 less than v1? the tile size for v0 is 32, so there's 4096/32 =  128 tiles for a one row computation. 110 cu run 110 programs at onece. so the first wave cover most or row 1 All of those programs read the same strip of A. After the first one fetches it, the rest hit L2.
+
 3. Find a shape where v0 beats v1. (Look at decode.) Explain it by counting tiles against 110 CUs, as in the Day 2 lesson.
+
+v0 beats v1 on every decode shape and on 512³. At M = 1, N = 4096, v0's 32×32 tiles give 128 programs, enough to fill all 110 CUs. v1's 128×128 tiles give only 32, so 78 CUs sit idle. 1×11008 has the smallest gap because v1 gets 86 tiles there, close to filling the GPU. Big tiles raise intensity but cut the number of programs, so the best tile size depends on the shape.
 
 ### End of day 3
 - Tests: 36/36 passed
@@ -152,3 +159,118 @@ odd        3000x  2000x  1500  rocBLAS   76.50   triton_v0   18.46 (  24%)   tri
 - Surprised me: I set the a_ptr += wrong.  wrote this in the beginning: a_ptrs += offs_k[None, : ] * s_ak
 - Stuck on: stuck on understanding the pointer grids, how program is handing data. 
 - First step tomorrow: read ROCm "Optimizing Triton kernels"
+
+## Day 4
+result from bench.run_v2_gropu
+
+ 4096  GROUP_M= 1    89.5 TFLOPS
+ 4096  GROUP_M= 4    89.5 TFLOPS
+ 4096  GROUP_M= 8    88.9 TFLOPS
+ 4096  GROUP_M=16    89.0 TFLOPS
+ 8192  GROUP_M= 1    95.0 TFLOPS
+ 8192  GROUP_M= 4    96.4 TFLOPS
+ 8192  GROUP_M= 8    91.0 TFLOPS
+ 8192  GROUP_M=16    82.6 TFLOPS
+
+ data from bench.compare results/triton_v1.csv results/triton_v3.csv
+square      512x   512x   512  rocBLAS   15.11   triton_v1    6.93 (  46%)   triton_v3   13.64 (  90%)
+square     1024x  1024x  1024  rocBLAS   47.26   triton_v1   32.90 (  70%)   triton_v3   45.19 (  96%)
+square     2048x  2048x  2048  rocBLAS   87.37   triton_v1   72.45 (  83%)   triton_v3   75.99 (  87%)
+square     4096x  4096x  4096  rocBLAS  101.10   triton_v1   90.43 (  89%)   triton_v3   95.15 (  94%)
+square     8192x  8192x  8192  rocBLAS  106.30   triton_v1   76.28 (  72%)   triton_v3  102.29 (  96%)
+prefill    2048x  4096x  4096  rocBLAS  105.01   triton_v1   88.45 (  84%)   triton_v3   90.44 (  86%)
+prefill    2048x 11008x  4096  rocBLAS  111.17   triton_v1   93.15 (  84%)   triton_v3   94.40 (  85%)
+prefill    2048x  4096x 11008  rocBLAS  112.12   triton_v1   92.11 (  82%)   triton_v3   93.33 (  83%)
+decode        1x  4096x  4096  rocBLAS    0.69   triton_v1    0.18 (  26%)   triton_v3    0.44 (  64%)
+decode        4x  4096x  4096  rocBLAS    2.72   triton_v1    0.70 (  26%)   triton_v3    1.74 (  64%)
+decode       16x  4096x  4096  rocBLAS   10.69   triton_v1    2.79 (  26%)   triton_v3    6.95 (  65%)
+decode        1x 11008x  4096  rocBLAS    1.13   triton_v1    0.45 (  40%)   triton_v3    0.90 (  80%)
+esm        1024x  3840x  1280  rocBLAS   76.35   triton_v1   62.73 (  82%)   triton_v3   68.31 (  89%)
+esm        1024x  1280x  1280  rocBLAS   61.14   triton_v1   42.11 (  69%)   triton_v3   58.91 (  96%)
+esm        1024x  5120x  1280  rocBLAS   83.47   triton_v1   76.26 (  91%)   triton_v3   80.35 (  96%)
+esm        1024x  1280x  5120  rocBLAS   88.02   triton_v1   51.24 (  58%)   triton_v3   74.63 (  85%)
+odd        1000x  1000x  1000  rocBLAS   39.18   triton_v1   18.38 (  47%)   triton_v3   26.54 (  68%)
+odd        3000x  2000x  1500  rocBLAS   76.50   triton_v1   63.77 (  83%)   triton_v3   65.37 (  85%)
+
+best-config table: 
+
+| Family  | Shape                | BLOCK_M × BLOCK_N × BLOCK_K | num_warps | TFLOPS | % of rocBLAS |
+|---------|----------------------|-----------------------------|-----------|--------|--------------|
+| square  | 4096³                | 128 × 256 × 32              | 8         | 95.25  | 94%          |
+| square  | 8192³                | 128 × 256 × 32              | 8         | 102.29 | 96%          |
+| prefill | 2048 × 11008 × 4096  | 128 × 128 × 64              | 8         | 94.40  | 85%          |
+| decode  | 1 × 4096 × 4096      | 64 × 64 × 64                | 4         | 0.44   | 64%          |
+| esm     | 1024 × 1280 × 5120   | 128 × 128 × 64              | 8         | 74.63  | 85%          |
+
+### look into the compiler
+hzhang22@nid005028:/scratch/project_462001433/hui/gpu-perf> grep -h -E "NumVgprs|NumAgprs|TotalNumVgprs|ScratchSize|Occupancy|LDSByteSize" $(find $TRITON_CACHE_DIR -name "*.amdgcn")
+; NumVgprs: 107
+; NumAgprs: 0
+; TotalNumVgprs: 107
+; ScratchSize: 0
+; LDSByteSize: 0 bytes/workgroup (compile time only)
+; Occupancy: 4
+hzhang22@nid005028:/scratch/project_462001433/hui/gpu-perf> grep -h -o '"shared": *[0-9]*' $(find $TRITON_CACHE_DIR -name "*.json")
+"shared": 24576
+TotalNumVgprs : Registers per lane for one wavefront (vector + accumulation registers together)
+
+ScratchSize : Bytes spilled to slow memory because registers ran out. 0 is what you want
+
+Occupancy: The compiler's answer: wavefronts per SIMD
+"shared" (from the .json):  LDS bytes per workgroup. Use this if LDSByteSize shows 0
+
+### compute occupancy
+4c. Compute occupancy yourself, then check. On MI250X each SIMD has 512 registers per lane, allocated in chunks of 8, and holds at most 8 wavefronts. Each CU has 4 SIMDs and 64 KB of LDS.
+1. Register limit: round TotalNumVgprs up to a multiple of 8, then 512 ÷ that, rounded down, capped at 8.
+107 round up to 112. 512/112 = 4.5, round down to four. 
+
+2. LDS limit: 65536 ÷ shared bytes, rounded down, gives workgroups per CU. Multiply by num_warps (wavefronts per workgroup), divide by 4 SIMDs: wavefronts per SIMD.
+65536/24576, round donw = 2  2* num_warps = 8. 8/4 = 2 wavefrounds per workgroup
+
+3. Occupancy is the smaller of the two.
+occupancy is two? as 1 give us result 4, 2 give us result 2. the smaller number is 2.  but the occupancy from above is four. 
+
+reason:The compiler sees zero bytes of LDS. Triton doesn't declare its shared memory statically in the kernel. It requests it as dynamic LDS at launch time, and that's where your 24576 comes from (kernel.metadata.shared). So when the compiler computed Occupancy: 4, the LDS limit looked infinite and only registers constrained it. It printed the register limit, which is exactly your step 1.
+The true occupancy needs both constraints, and only you have both numbers:
+At runtime, LDS binds first. The compiler's number is an upper bound, not the answer.
+
+Two small fixes to your write-up:
+
+In step 2, the unit at the end should be wavefronts per SIMD, not "per workgroup." The chain is: 2 workgroups/CU × 4 wavefronts/workgroup = 8 wavefronts/CU, then ÷ 4 SIMDs = 2 wavefronts/SIMD.
+Step 3 can drop the question mark. Something like: "Occupancy = min(4, 2) = 2. The compiler reports 4 because it only sees static LDS (0 bytes); Triton's 24576 bytes are allocated dynamically at launch."
+
+One consequence worth noting for later: registers are no longer your bottleneck. If you cut VGPRs from 107 to, say, 64, occupancy would still be 2. To raise it, you'd need to shrink shared memory, for example with smaller BLOCK_K or fewer pipeline stages (num_stages). Below 21845 bytes you get 3 workgroups per CU. Below 16384 bytes you get 4.
+short: Compiler says 4, because it sees LDSByteSize: 0.
+Hand calculation says 2, because the launch requests 24576 bytes.
+Source of the 24576: kernel.metadata.shared.
+Conclusion: actual occupancy is 2, bound by LDS, not registers.
+
+### results from step 5:
+ 4096  mfma 16x16  waves_per_eu=0    99.4 TFLOPS
+ 4096  mfma 16x16  waves_per_eu=1    99.2 TFLOPS
+ 4096  mfma 16x16  waves_per_eu=2    85.9 TFLOPS
+ 4096  mfma 16x16  waves_per_eu=3    86.1 TFLOPS
+ 4096  mfma 32x32  waves_per_eu=0    95.0 TFLOPS
+ 4096  mfma 32x32  waves_per_eu=1    95.0 TFLOPS
+ 4096  mfma 32x32  waves_per_eu=2    85.6 TFLOPS
+ 4096  mfma 32x32  waves_per_eu=3    85.9 TFLOPS
+ 8192  mfma 16x16  waves_per_eu=0   106.8 TFLOPS
+ 8192  mfma 16x16  waves_per_eu=1   106.7 TFLOPS
+ 8192  mfma 16x16  waves_per_eu=2    92.0 TFLOPS
+ 8192  mfma 16x16  waves_per_eu=3    92.1 TFLOPS
+ 8192  mfma 32x32  waves_per_eu=0   100.9 TFLOPS
+ 8192  mfma 32x32  waves_per_eu=1   100.8 TFLOPS
+ 8192  mfma 32x32  waves_per_eu=2    91.2 TFLOPS
+ 8192  mfma 32x32  waves_per_eu=3    91.2 TFLOPS
+
+ 1. 16 x 16 mfma is faster than 32 x 32. AMD's guide says 16 x 16 is faster on Mi300X, it also for Mi250x from our test. 
+ 2. the waves_per_eu did not help. with setting 0 has the bigest TFLOPS than 1,2,3. 
+
+ ### End of Day 4. 
+- GROUP_M at 8192: GROUP_M=1 _95__ TFLOPS, best _96.4__ (GROUP_M=_4_)
+- v3 at 4096: _95.25__ TFLOPS (_94__% of rocBLAS); at 8192: 102.29, 96%of rocBLAS
+- Occupancy by hand: _2_, compiler says: _4_
+- MFMA 16 vs 32 on MI250X: _16__
+- Surprised me: no
+- Stuck on: computing the pid_m and pid_n with group_m. 
+- First step tomorrow: read MLC appendix on measuring kernel performance
