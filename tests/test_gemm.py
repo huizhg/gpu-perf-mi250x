@@ -1,5 +1,5 @@
 import sys, torch
-from kernels.gemm import gemm, gemm_v2, gemm_v3
+from kernels.gemm import gemm, gemm_v2, gemm_v3, gemm_v1_rows, gemm_v4
 from bench.shapes import SHAPES
 
 from kernels.gemm import gemm, gemm_v2
@@ -16,9 +16,11 @@ def check(fn, name, M, N, K, tag):
 if __name__ == "__main__":
     versions = {
         "v1": lambda a, b: gemm(a, b, 128, 128, 32),
+        "v1_rows": lambda a, b: gemm_v1_rows(a, b, 128, 128, 32),
         "v2_g1": lambda a, b: gemm_v2(a, b, 128, 128, 32, 1),
         "v2_g8": lambda a, b: gemm_v2(a, b, 128, 128, 32, 8),
-        "v3": lambda a,b: gemm_v3(a, b)
+        "v3": lambda a,b: gemm_v3(a, b),
+        "v4": lambda a,b: gemm_v4(a, b)
     }
     results = [check(fn, name, *s) for name, fn in versions.items() for s in SHAPES]
     print(f"{sum(results)}/{len(results)} passed")

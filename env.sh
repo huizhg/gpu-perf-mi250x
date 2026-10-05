@@ -6,3 +6,11 @@ export MIOPEN_CUSTOM_CACHE_DIR=$MIOPEN_USER_DB_PATH
 export MPLBACKEND=Agg
 run() { singularity exec --bind /scratch/project_462001433:/scratch/project_462001433 "$SIF" "$@"; }
 cd $PROJ
+
+# Check for missing dependencies
+#run ldd /scratch/project_462001433/hui/extra-libs/libdw.so.1 | grep "not found"
+runprof () {
+    singularity exec --bind /scratch/project_462001433:/scratch/project_462001433 \
+        --env LD_LIBRARY_PATH=/scratch/project_462001433/hui/extra-libs:/opt/rocm/lib \
+        "$SIF" "$@"
+}

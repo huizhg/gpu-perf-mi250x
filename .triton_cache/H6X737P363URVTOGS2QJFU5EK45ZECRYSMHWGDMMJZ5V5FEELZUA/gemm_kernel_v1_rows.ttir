@@ -1,0 +1,16 @@
+#loc = loc("/scratch/project_462001433/hui/gpu-perf/kernels/gemm.py":116:0)
+#loc2 = loc("a_ptr"(#loc))
+#loc3 = loc("b_ptr"(#loc))
+#loc4 = loc("c_ptr"(#loc))
+#loc5 = loc("M"(#loc))
+#loc6 = loc("N"(#loc))
+#loc7 = loc("K"(#loc))
+#loc8 = loc("s_am"(#loc))
+#loc9 = loc("s_bk"(#loc))
+#loc10 = loc("s_cm"(#loc))
+module {
+  tt.func public @gemm_kernel_v1_rows(%a_ptr: !tt.ptr<f16> {tt.divisibility = 16 : i32, tt.pointer_range = 32 : i32} loc("a_ptr"(#loc)), %b_ptr: !tt.ptr<f16> {tt.divisibility = 16 : i32, tt.pointer_range = 32 : i32} loc("b_ptr"(#loc)), %c_ptr: !tt.ptr<f16> {tt.divisibility = 16 : i32, tt.pointer_range = 32 : i32} loc("c_ptr"(#loc)), %M: i32 {tt.divisibility = 16 : i32} loc("M"(#loc)), %N: i32 {tt.divisibility = 16 : i32} loc("N"(#loc)), %K: i32 {tt.divisibility = 16 : i32} loc("K"(#loc)), %s_am: i32 {tt.divisibility = 16 : i32} loc("s_am"(#loc)), %s_bk: i32 {tt.divisibility = 16 : i32} loc("s_bk"(#loc)), %s_cm: i32 {tt.divisibility = 16 : i32} loc("s_cm"(#loc))) attributes {noinline = false} {
+    tt.return loc(#loc1)
+  } loc(#loc)
+} loc(#loc)
+#loc1 = loc("/scratch/project_462001433/hui/gpu-perf/kernels/gemm.py":140:4)
