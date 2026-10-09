@@ -1,0 +1,10 @@
+{
+  "model": "650m",
+  "proteins_per_gpu_hour": 176656,
+  "padding_waste": 0.595,
+  "useful_TFLOPS": 23.7,
+  "computed_TFLOPS": 61.4,
+  "useful_MFU": 0.206,
+  "peak_memory_GB": 2.2,
+  "attention_path": "sdpa"
+}

@@ -4,7 +4,10 @@ export TRITON_CACHE_DIR=$PROJ/.triton_cache
 export MIOPEN_USER_DB_PATH=$PROJ/.miopen
 export MIOPEN_CUSTOM_CACHE_DIR=$MIOPEN_USER_DB_PATH
 export MPLBACKEND=Agg
-run() { singularity exec --bind /scratch/project_462001433:/scratch/project_462001433 "$SIF" "$@"; }
+export HF_HOME=/scratch/project_462001433/hf-cache
+run() { singularity exec --bind /scratch/project_462001433:/scratch/project_462001433 \
+    --env HF_HOME=/scratch/project_462001433/hf-cache \
+    "$SIF" "$@"; }
 cd $PROJ
 
 # Check for missing dependencies

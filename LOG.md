@@ -469,13 +469,12 @@ Both are Cijk_... Tensile MFMA GEMMs. There's no gemv, and SK0 means no stream-K
 
 3. What does the Triton kernel name look like? It's gemm_kernel_v2 in all three runs. That's expected, because gemm_v4 is the autotuner wrapped around gemm_kernel_v2 (see CONFIGS_V4 in Step 0c). The name does not include block sizes, so it can't confirm the config by itself. The autotune log (TRITON_PRINT_AUTOTUNING=1) is your evidence for which config ran.
 
-### Three finds a nd the post outline:
+### Three finds and the post outline:
 1. the best tile depends on the shape. evidence: Autotuning took decode from 26% to 64% of rocBLAS, 512³ from 46% to 90%, ESM 1024 × 1280 × 5120 from 58% to 85% . And also for the use of group_m in kernel v2, we noticed that bigger group_m size will make the tile columns narrowers. the pros is that it make the data reused more, more l2 cahce hit than smaller group_m. but the bad thing is that bigger group uses less program, more CU sit idle, causing less TFlOPS. 
 
 2. visiting order matters at 8192. Evidence: v1 at 76 vs row order at about 95 (confirmed or not by Step 0a); grouping added a little more. We need to consider the data layout while desigining a kernel. for row-wise data, moving across the column has less step size than move across the rows, which makes the loading faster i think. 
 
 3. Decode needs a different kind of kernel. the matmul for decode process in LLM inference is a thin query multiply the previous KV cache. so the shape is something like 1x4096x4096. in the test, rocblas switched to another kernel for the decode shape. our autotuned handwritten kernel used the same kernel for different shape, which cause the performance gap between rocblas and ours.  
-
 
 ### End of day 5
 - 0a launch order: v1 rows at 8192 = _98.2__ TFLOPS
@@ -486,3 +485,10 @@ Both are Cijk_... Tensile MFMA GEMMs. There's no gemv, and SK0 means no stream-K
 - Three findings: 1. visiting order matters at 8192  2. the best tile depends on the shape 3. decode needs a different kind of kernel
 - Surprised me: no
 - First step tomorrow: draft the post from the outline
+
+## Day 6
+Step 0 table: the unified headline numbers:
+4096  v4       median   99.6  range   99.6 to   99.7 TFLOPS
+4096  rocBLAS  median  101.5  range  101.4 to  101.9 TFLOPS
+8192  v4       median  107.4  range  107.4 to  107.4 TFLOPS
+8192  rocBLAS  median  106.5  range  106.5 to  106.5 TFLOPS
