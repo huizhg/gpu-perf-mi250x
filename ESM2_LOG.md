@@ -1,4 +1,4 @@
-## M1
+## M1 day 1
 ### Sample 10,000 data from the Swiss-Prof dataset
 Randomly sample 10,000 proteins from dataset Swiss-Prof, which has approximately half a million proteins. 
 Statistics for the 10,000 sampled protein: 
@@ -69,9 +69,150 @@ The following is the result from the 650M model:
 - Swiss-Prot sample: mean  368, median 294, p99 1600, >1022: 3.6%
 - Attention path: sdpa
 - Speed of light, 3B: 203,447 proteins/GPU-hour (attention share 3.2%)
-- Speed of light, 650M: 360,116 proteins/GPU-hour (attention share 6.2%)
+- Speed of light, 650M: 860,116 proteins/GPU-hour (attention share 6.2%)
 - Baseline, 3B: 55907 proteins/GPU-hour (27.48% of speed of light), padding waste  60.52%, useful MFU: 0.275
 - Baseline, 650M: 176656 proteins/GPU-hour (20.54% of speed of light), useful MFU 0.206
 - Which model is more efficient, and why: 3B model. The useful work take more portion than the fixed cpu work, such as tokenization and kernel launches. 
 - Two guesses for the missing time: 1. tokenization 2. kernel launches.
 - Surprised me: nothing. 
+
+## M2 day 2
+
+### the prediction before measurement
+Try using bucketing to remove all padding. how much the performance would improve? now the padding takes around 60% of the useless computing. the useful throughput should rise 80.3 / 31.7 = 2.5 times. Roughly 140,000 proteins per GPU hours for the 3B model. but real bucketing leaves a little padding, and smaller batches of short proteins may run less efficiently. it is might be a little bit less than 2.5 times.
+
+###  token-budget buckeing
+The idea is to sort proteins by length, then fill each batch until it holds a fixed number of tokens (approximately). Short proteins will be packed in a bigger batch together, longer ones in small batches, and each batch is padded only to its own longest member.  A fixed token budget, rather than a fixed batch size, keeeps each batch's work and memory roughly constant. 
+The follwings are the results from three budgets on the 3B model: we tested max_tokens for 8192, 16384, 32768. (if we count each protein has 1022 amino acids, whichi is the context window of esm-2, these three numbers are approximately 8192/1022=8, 16384/1022=16, 32768/1022=32 proteins per batch). but as most proteins are only hundreds of amino acids, one batch has more proteins than the estimation. 
+{
+  "model": "3b",
+  "proteins_per_gpu_hour": 137195,
+  "padding_waste": 0.016,
+  "useful_TFLOPS": 77.9,
+  "computed_TFLOPS": 79.2,
+  "useful_MFU": 0.675,
+  "peak_memory_GB": 6.6,
+  "attention_path": "sdpa",
+  "max_tokens": 8192,
+  "num_batches": 89
+}
+{
+  "model": "3b",
+  "proteins_per_gpu_hour": 135899,
+  "padding_waste": 0.031,
+  "useful_TFLOPS": 77.1,
+  "computed_TFLOPS": 79.6,
+  "useful_MFU": 0.669,
+  "peak_memory_GB": 7.5,
+  "attention_path": "sdpa",
+  "max_tokens": 16384,
+  "num_batches": 45
+}
+
+{
+  "model": "3b",
+  "proteins_per_gpu_hour": 133485,
+  "padding_waste": 0.056,
+  "useful_TFLOPS": 75.8,
+  "computed_TFLOPS": 80.4,
+  "useful_MFU": 0.657,
+  "peak_memory_GB": 9.1,
+  "attention_path": "sdpa",
+  "max_tokens": 32768,
+  "num_batches": 23
+}
+From the above results, we can see that 8192 is the best budget that we have tested, now our useful_TFLOPS is 77.9, very close to 80.3. The computed TFLOPS changes when the batches are sorted, as the batches of short proteins are many small GEMMs. 
+
+### Profile the bucketed pipeline
+The the useless padding is gone, the next bottleneck becomes visible. Let's profile the bucketed pipeline and see where does the time go. confirm it with our two guesses: tokenizatio and kernel launches. we will test them both and check wich GPU operations take the time. 
+
+For the bucketed pipeline, proteins per seccond: 
+max_tokens      num_batches     proteins/s   bucket run total time   tokenize time
+8192            89              38.10           52.49s                2.04s
+16384           45              37.75           52.98s                2.04s
+16384           23              37.08           53.93s                2.04s
+
+So, we can see that the tokenizatio ntime is only uses around 3.7% of the total run time. 
+
+Lets test where does the gpu time go. 
+
+This is the result (too big, i didn't copy here), inside /results/esm_m2_profile.txt , instead, we can group the kernels into the following four buckets, in the following table, i'll show how much share of the gpu time of each bucket. 
+
+This table mixes two kinds of rows:
+Op rows (aten::...) are PyTorch operations. They have CPU time, because the CPU dispatches them.
+Kernel rows (Cijk_..., attn_fwd, void at::native::...) are the GPU kernels those ops launch. Their Self CPU is 0.000us, which is how you spot them. 
+
+When the model runs nn.Linear, the call chain looks like this:
+aten::linear            (Self CUDA 0,        CUDA total 8.759 s)
+  └─ aten::addmm        (Self CUDA 8.759 s,  CUDA total 8.759 s)
+       └─ Cijk_..._Bias kernel  (8.758 s on the GPU)
+
+Bucket      	          Ops counted	                                            Time	                        Share
+GEMM	                       addmm	                                           8,759 ms	                      74.0%
+Attention	      _efficient_attention_forward (attn_fwd)	                        422 ms                    	  3.6%
+Elementwise and norm	  mul 829 + add 611 + erf 279 + native_layer_norm 200 	  1,920 ms	                    16.2%
+Other	              cat 313 + rows below the top 20: 422	                      735 ms	                      6.2%
+Total		                                                                        11,835 ms	                    100%
+the attention path sdpa chose efficient_attention_forward  (attn_fwd)
+
+How to read a trace in perfetto:
+![How to read a trace in perfetto?](<./figures_for_esm_log/boundary_zoomed_annotated.png>)
+
+
+![GPU kernel boundary between two consecutive batches (ESM-2 3B, bucketed pipeline, MI250X)](<./figures_for_esm_log/kernel boundaries between batches.png>)
+
+The above trace shows the handover from batch N to batch N+1, about 0.25 ms of time. The top row is the CPU (Python main thread). The lower row is the GPU (stream 0).
+
+Batch N ends on the GPU with a GEMM (Cijk_...) and an elementwise kernel (void...). The first flag marks the end of that last kernel. The second flag marks the first compute kernel of batch N+1. The gap between them is 0.13 ms. The GPU runs no compute during it. It only copies batch N+1’s two inputs from host to device (Memcpy HtoD, 12 µs and about 8 µs, likely input_ids and the attention mask), with about 30 µs of idle time between them.
+
+On the CPU, the first aten::to calls hipMemcpyWithStream, which blocks for about 500 ms. Almost none of that is copying. The copy joins the same queue as the kernels, so it waits until batch N finishes on the GPU. The CPU call returns the moment the copy completes. After the second copy, the CPU starts the forward pass (aten::ne), and the first kernel follows.
+
+After the first kernel, small kernels trickle in for another 0.2 ms. The GPU becomes continuously busy about 0.34 ms after the boundary.
+
+### the Amdahl ranking
+
+Why do we care about this? Because this is what guides us to decide what to work on. A three speed up on something takes only 2% of the time does't help with anything. a even 1.5x speed up on somthing takes 60% of the time saves a log.  
+If a part takes a share of f of the total time, and you speed it up by s, then the time you save it: 
+$f \times \left(1 - \frac{1}{s}\right)$
+
+The problem is, how do we estimate "S"? how can we know how much we are able to speed some operations up by doing optimization? The followings show three ways to estimate s for different kind of work. 
+
+1. Roofline headroom (for the compute bound work, like GEMM). s_max = roof/what we have achieved now. if a kernel already runs at 90%, then the best possible is 1/0.9 = 1.11
+
+2. Memory-traffic counting. (for memory-bound work, like elementwise operations). These kernels do almost no math. Their time is the time to read and wirte the tensor in HBM. A chain of K unfused operations reads and writes the tensor k times; fused, it does so once. So s = bytes moved before/bytes moved after = k.
+
+3. Hiding. (for work that can overlap). If a background worder can do the work while the GPU computes, it leaves the critical path entirely: s = $\infty$, and save time = f. 
+
+Target	                    f	                      Fix	                        Achievable s	                Time saved
+Elementwise and norm	     16.2%	      fusion (Inductor or Fusion lab)	          ~2.5	                        ~9.7%
+GEMMs	                     74.0%	       better kernels or tuning	                ~1.05 (max 1.09)	          ~3.5% (max 6%)
+Attention	                  3.6%	        a faster fused kernel	                    ~1.2	                       ~0.6%
+CPU tokenization gaps    	~0.06%	        tokenize ahead in a background worker     	∞	                          ~0.06%
+
+The above table shows our estimation of how much speed up we can have for each target. The followings are the reasonings of how we got these estimated number. 
+
+Elementwise and norm, s ≈ 2.5 (method 2). The bucket is mostly unfused chains:
+
+GELU runs as erf, mul and add kernels on the 4× hidden-width FFN tensor (10,240 wide), roughly 4 passes over the same data. Fused, it’s 1 pass: about 4×.
+Rotary runs mul, cat, neg, add on q and k, about 5 passes. Fused, it’s 1: about 5×.
+Residual add and LayerNorm are already single kernels, so they gain little unless fused with each other: about 1 to 2×.
+
+Weighting these, about 2.5× for the whole bucket is a fair middle estimate, giving a 8 to 11% range for s between 2 and 3. Bonus: the cat in “Other” (2.6%) is part of the rotary chain, so fusion removes that too. That pushes f to about 19%.
+
+GEMMs, s ≈ 1.05 (method 1). The best run computed 79.2 TFLOPS averaged over the whole run. Nearly all FLOPs are GEMMs, since attention FLOPs are about 2% at these lengths, but GEMMs take only 74% of the time. So the GEMM kernels themselves run at about 0.98 × 79.2 ÷ 0.74 ≈ 105 TFLOPS, about 91% of your 115 TFLOPS roof. The ceiling is 115 ÷ 105 ≈ 1.09, and realistic tuning gets part of it.
+
+That’s why GEMM saves less than fusion despite being 4.6× bigger: it’s already near its roof.
+
+Attention, s ≈ 1.2 (judgment). SDPA already uses a fused kernel (attn_fwd). A better one might gain 10 to 30%, and even infinite speedup would save only 3.6%.
+
+Tokenization, s = ∞ (method 3), but f is tiny. This is the subtle row. Your 3a number gives tokenization’s CPU time, probably around 20 ms per batch, or about 3 to 4% of total. But the trace shows that time already overlaps GPU work: the CPU tokenizes batch N+1 while the GPU still runs batch N. The 3a text assumed the pipeline works “in strict turns”, and the trace proves it doesn’t. The real f is the GPU idle time at each boundary: about 0.34 ms ÷ 590 ms ≈ 0.06%.
+
+
+### End of ESM day 2
+- Prediction for bucketing: 2.5x
+- Best budget: 8192 tokens -> 137195 proteins/GPU-hour (2.45x vs baseline), padding waste 1.6%, useful MFU 0.676
+- Tokenization: 2.04s of 52.5 s total (3.8%)
+- GPU time: GEMM 74%, attention 3.6%, elementwise/norm 16.2%, other 6.2%
+- SDPA kernel: attn_fwd 
+- Amdahl top target: elementwise and norm
+- Surprised me: The difficulty for the Amdahl ranking estimation. 
