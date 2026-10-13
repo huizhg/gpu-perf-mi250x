@@ -1,0 +1,60 @@
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.82s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.12it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.03s/it]
+Some weights of EsmModel were not initialized from the model checkpoint at /scratch/project_462001433/hui/gpu-perf/models/esm2_3b and are newly initialized: ['pooler.dense.bias', 'pooler.dense.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+V1013 10:18:18.422000 16493 torch/_dynamo/guards.py:4514] [0/1] [__recompiles] Recompiling function wrapper in /opt/venv/lib/python3.12/site-packages/transformers/utils/generic.py:961
+V1013 10:18:18.422000 16493 torch/_dynamo/guards.py:4514] [0/1] [__recompiles]     triggered by the following guard failure(s):
+V1013 10:18:18.422000 16493 torch/_dynamo/guards.py:4514] [0/1] [__recompiles]     - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 97, actual 79
+V1013 10:18:55.016000 16493 torch/_dynamo/guards.py:4514] [0/2] [__recompiles] Recompiling function wrapper in /opt/venv/lib/python3.12/site-packages/transformers/utils/generic.py:961
+V1013 10:18:55.016000 16493 torch/_dynamo/guards.py:4514] [0/2] [__recompiles]     triggered by the following guard failure(s):
+V1013 10:18:55.016000 16493 torch/_dynamo/guards.py:4514] [0/2] [__recompiles]     - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 79, actual 67
+V1013 10:18:55.016000 16493 torch/_dynamo/guards.py:4514] [0/2] [__recompiles]     - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 97, actual 67
+V1013 10:19:31.353000 16493 torch/_dynamo/guards.py:4514] [0/3] [__recompiles] Recompiling function wrapper in /opt/venv/lib/python3.12/site-packages/transformers/utils/generic.py:961
+V1013 10:19:31.353000 16493 torch/_dynamo/guards.py:4514] [0/3] [__recompiles]     triggered by the following guard failure(s):
+V1013 10:19:31.353000 16493 torch/_dynamo/guards.py:4514] [0/3] [__recompiles]     - 0/2: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 67, actual 60
+V1013 10:19:31.353000 16493 torch/_dynamo/guards.py:4514] [0/3] [__recompiles]     - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 79, actual 60
+V1013 10:19:31.353000 16493 torch/_dynamo/guards.py:4514] [0/3] [__recompiles]     - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 97, actual 60
+V1013 10:20:08.164000 16493 torch/_dynamo/guards.py:4514] [0/4] [__recompiles] Recompiling function wrapper in /opt/venv/lib/python3.12/site-packages/transformers/utils/generic.py:961
+V1013 10:20:08.164000 16493 torch/_dynamo/guards.py:4514] [0/4] [__recompiles]     triggered by the following guard failure(s):
+V1013 10:20:08.164000 16493 torch/_dynamo/guards.py:4514] [0/4] [__recompiles]     - 0/3: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 60, actual 56
+V1013 10:20:08.164000 16493 torch/_dynamo/guards.py:4514] [0/4] [__recompiles]     - 0/2: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 67, actual 56
+V1013 10:20:08.164000 16493 torch/_dynamo/guards.py:4514] [0/4] [__recompiles]     - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 79, actual 56
+V1013 10:20:08.164000 16493 torch/_dynamo/guards.py:4514] [0/4] [__recompiles]     - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 97, actual 56
+V1013 10:20:44.795000 16493 torch/_dynamo/guards.py:4514] [0/5] [__recompiles] Recompiling function wrapper in /opt/venv/lib/python3.12/site-packages/transformers/utils/generic.py:961
+V1013 10:20:44.795000 16493 torch/_dynamo/guards.py:4514] [0/5] [__recompiles]     triggered by the following guard failure(s):
+V1013 10:20:44.795000 16493 torch/_dynamo/guards.py:4514] [0/5] [__recompiles]     - 0/4: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 56, actual 52
+V1013 10:20:44.795000 16493 torch/_dynamo/guards.py:4514] [0/5] [__recompiles]     - 0/3: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 60, actual 52
+V1013 10:20:44.795000 16493 torch/_dynamo/guards.py:4514] [0/5] [__recompiles]     - 0/2: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 67, actual 52
+V1013 10:20:44.795000 16493 torch/_dynamo/guards.py:4514] [0/5] [__recompiles]     - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 79, actual 52
+V1013 10:20:44.795000 16493 torch/_dynamo/guards.py:4514] [0/5] [__recompiles]     - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 97, actual 52
+V1013 10:21:20.349000 16493 torch/_dynamo/guards.py:4514] [0/6] [__recompiles] Recompiling function wrapper in /opt/venv/lib/python3.12/site-packages/transformers/utils/generic.py:961
+V1013 10:21:20.349000 16493 torch/_dynamo/guards.py:4514] [0/6] [__recompiles]     triggered by the following guard failure(s):
+V1013 10:21:20.349000 16493 torch/_dynamo/guards.py:4514] [0/6] [__recompiles]     - 0/5: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 52, actual 49
+V1013 10:21:20.349000 16493 torch/_dynamo/guards.py:4514] [0/6] [__recompiles]     - 0/4: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 56, actual 49
+V1013 10:21:20.349000 16493 torch/_dynamo/guards.py:4514] [0/6] [__recompiles]     - 0/3: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 60, actual 49
+V1013 10:21:20.349000 16493 torch/_dynamo/guards.py:4514] [0/6] [__recompiles]     - 0/2: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 67, actual 49
+V1013 10:21:20.349000 16493 torch/_dynamo/guards.py:4514] [0/6] [__recompiles]     - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 79, actual 49
+V1013 10:21:20.349000 16493 torch/_dynamo/guards.py:4514] [0/6] [__recompiles]     - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 97, actual 49
+V1013 10:21:57.443000 16493 torch/_dynamo/guards.py:4514] [0/7] [__recompiles] Recompiling function wrapper in /opt/venv/lib/python3.12/site-packages/transformers/utils/generic.py:961
+V1013 10:21:57.443000 16493 torch/_dynamo/guards.py:4514] [0/7] [__recompiles]     triggered by the following guard failure(s):
+V1013 10:21:57.443000 16493 torch/_dynamo/guards.py:4514] [0/7] [__recompiles]     - 0/6: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 49, actual 45
+V1013 10:21:57.443000 16493 torch/_dynamo/guards.py:4514] [0/7] [__recompiles]     - 0/5: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 52, actual 45
+V1013 10:21:57.443000 16493 torch/_dynamo/guards.py:4514] [0/7] [__recompiles]     - 0/4: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 56, actual 45
+V1013 10:21:57.443000 16493 torch/_dynamo/guards.py:4514] [0/7] [__recompiles]     - 0/3: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 60, actual 45
+V1013 10:21:57.443000 16493 torch/_dynamo/guards.py:4514] [0/7] [__recompiles]     - 0/2: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 67, actual 45
+V1013 10:21:57.443000 16493 torch/_dynamo/guards.py:4514] [0/7] [__recompiles]     - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 79, actual 45
+V1013 10:21:57.443000 16493 torch/_dynamo/guards.py:4514] [0/7] [__recompiles]     - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 97, actual 45
+V1013 10:22:34.840000 16493 torch/_dynamo/guards.py:4514] [0/8] [__recompiles] Recompiling function wrapper in /opt/venv/lib/python3.12/site-packages/transformers/utils/generic.py:961
+V1013 10:22:34.840000 16493 torch/_dynamo/guards.py:4514] [0/8] [__recompiles]     triggered by the following guard failure(s):
+V1013 10:22:34.840000 16493 torch/_dynamo/guards.py:4514] [0/8] [__recompiles]     - 0/7: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 45, actual 42
+V1013 10:22:34.840000 16493 torch/_dynamo/guards.py:4514] [0/8] [__recompiles]     - 0/6: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 49, actual 42
+V1013 10:22:34.840000 16493 torch/_dynamo/guards.py:4514] [0/8] [__recompiles]     - 0/5: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 52, actual 42
+V1013 10:22:34.840000 16493 torch/_dynamo/guards.py:4514] [0/8] [__recompiles]     - 0/4: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 56, actual 42
+V1013 10:22:34.840000 16493 torch/_dynamo/guards.py:4514] [0/8] [__recompiles]     - 0/3: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 60, actual 42
+V1013 10:22:34.840000 16493 torch/_dynamo/guards.py:4514] [0/8] [__recompiles]     - 0/2: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 67, actual 42
+V1013 10:22:34.840000 16493 torch/_dynamo/guards.py:4514] [0/8] [__recompiles]     - 0/1: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 79, actual 42
+V1013 10:22:34.840000 16493 torch/_dynamo/guards.py:4514] [0/8] [__recompiles]     - 0/0: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 97, actual 42
+W1013 10:22:34.841000 16493 torch/_dynamo/convert_frame.py:1676] [0/8] torch._dynamo hit config.recompile_limit (8)
+W1013 10:22:34.841000 16493 torch/_dynamo/convert_frame.py:1676] [0/8]    function: 'wrapper' (/opt/venv/lib/python3.12/site-packages/transformers/utils/generic.py:961)
+W1013 10:22:34.841000 16493 torch/_dynamo/convert_frame.py:1676] [0/8]    last reason: 0/7: tensor 'kwargs['input_ids']' size mismatch at index 0. expected 45, actual 42
+W1013 10:22:34.841000 16493 torch/_dynamo/convert_frame.py:1676] [0/8] To log all recompilation reasons, use TORCH_LOGS="recompiles".
+W1013 10:22:34.841000 16493 torch/_dynamo/convert_frame.py:1676] [0/8] To diagnose recompilation issues, see https://pytorch.org/docs/main/compile/programming_model.recompilation.html

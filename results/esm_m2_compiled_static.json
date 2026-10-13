@@ -1,0 +1,14 @@
+{
+  "model": "3b",
+  "proteins_per_gpu_hour": 144269,
+  "padding_waste": 0.016,
+  "useful_TFLOPS": 81.9,
+  "computed_TFLOPS": 83.3,
+  "useful_MFU": 0.71,
+  "peak_memory_GB": 6.6,
+  "attention_path": "sdpa",
+  "max_tokens": 8192,
+  "num_batches": 89,
+  "compile": "static",
+  "compile_and_first_pass_s": 343.6
+}

@@ -1,2 +1,8 @@
 models/
 data/uniprot_sprot.fasta.gz
+*trace*.json
+.cache_inspect/
+.rocprofv3/
+.triton_cache/
+*__pycache__*
+*.pyc

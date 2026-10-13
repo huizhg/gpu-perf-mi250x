@@ -1,0 +1,27 @@
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+## Call CompiledFxGraph fcxggm5sgv33hp2fihf56zlswwhl...         0.00%       0.000us         0.00%       0.000us       0.000us       10.109s       100.00%       10.109s     505.474ms            20  
+                             Torch-Compiled Region: 0/0         0.01%       1.455ms         4.06%     431.398ms      21.570ms       0.000us         0.00%       10.109s     505.441ms            20  
+## Call CompiledFxGraph fcxggm5sgv33hp2fihf56zlswwhl...         1.31%     138.538ms         4.03%     428.180ms      21.409ms       0.000us         0.00%       10.109s     505.441ms            20  
+Cijk_Alik_Bljk_BBS_BH_Bias_HA_S_SAV_UserArgs_MT128x2...         0.00%       0.000us         0.00%       0.000us       0.000us        8.722s        86.28%        8.722s       2.019ms          4320  
+                                               aten::mm         1.07%     113.547ms         1.29%     136.946ms      47.223us        7.207s        71.29%        7.207s       2.485ms          2900  
+                                            aten::addmm         0.51%      54.116ms         0.61%      65.133ms      45.231us        1.516s        15.00%        1.516s       1.053ms          1440  
+          aten::_scaled_dot_product_efficient_attention         0.04%       4.126ms         0.29%      30.256ms      42.022us       0.000us         0.00%     491.463ms     682.588us           720  
+                     aten::_efficient_attention_forward         0.08%       8.068ms         0.21%      22.410ms      31.126us     491.463ms         4.86%     491.463ms     682.588us           720  
+                                               attn_fwd         0.00%       0.000us         0.00%       0.000us       0.000us     491.463ms         4.86%     491.463ms     682.588us           720  
+          triton_poi_fused_add_addmm_div_erf_mul_view_5         0.07%       7.608ms         0.11%      11.249ms      15.623us     371.417ms         3.67%     371.417ms     515.857us           720  
+          triton_poi_fused_add_addmm_div_erf_mul_view_5         0.00%       0.000us         0.00%       0.000us       0.000us     371.417ms         3.67%     371.417ms     515.857us           720  
+triton_poi_fused__scaled_dot_product_efficient_atten...         0.09%       9.090ms         0.13%      13.619ms      18.915us     213.207ms         2.11%     213.207ms     296.121us           720  
+triton_poi_fused__scaled_dot_product_efficient_atten...         0.00%       0.000us         0.00%       0.000us       0.000us     213.207ms         2.11%     213.207ms     296.121us           720  
+    triton_red_fused_add_addmm_native_layer_norm_view_7         0.09%       9.730ms         0.13%      14.184ms      20.263us     154.670ms         1.53%     154.670ms     220.957us           700  
+    triton_red_fused_add_addmm_native_layer_norm_view_7         0.00%       0.000us         0.00%       0.000us       0.000us     154.670ms         1.53%     154.670ms     220.957us           700  
+    triton_red_fused_add_addmm_native_layer_norm_view_6         0.08%       8.649ms         0.12%      12.943ms      18.490us     135.703ms         1.34%     135.703ms     193.862us           700  
+    triton_red_fused_add_addmm_native_layer_norm_view_6         0.00%       0.000us         0.00%       0.000us       0.000us     135.703ms         1.34%     135.703ms     193.862us           700  
+triton_red_fused__to_copy_add_addmm_div_embedding_eq...         0.00%     318.069us         0.00%     453.085us      22.654us       6.851ms         0.07%       6.851ms     342.570us            20  
+triton_red_fused__to_copy_add_addmm_div_embedding_eq...         0.00%       0.000us         0.00%       0.000us       0.000us       6.851ms         0.07%       6.851ms     342.570us            20  
+triton_poi_fused__scaled_dot_product_efficient_atten...         0.02%       2.211ms         0.03%       3.277ms      18.208us       4.778ms         0.05%       4.778ms      26.545us           180  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 10.616s
+Self CUDA time total: 10.109s
+

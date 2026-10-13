@@ -185,13 +185,16 @@ The problem is, how do we estimate "S"? how can we know how much we are able to 
 
 Target	                    f	                      Fix	                        Achievable s	                Time saved
 Elementwise and norm	     16.2%	      fusion (Inductor or Fusion lab)	          ~2.5	                        ~9.7%
+CPU tokenization gaps    	~0.06%	        tokenize ahead in a background worker     	∞	                          ~3.7%
 GEMMs	                     74.0%	       better kernels or tuning	                ~1.05 (max 1.09)	          ~3.5% (max 6%)
 Attention	                  3.6%	        a faster fused kernel	                    ~1.2	                       ~0.6%
-CPU tokenization gaps    	~0.06%	        tokenize ahead in a background worker     	∞	                          ~0.06%
 
 The above table shows our estimation of how much speed up we can have for each target. The followings are the reasonings of how we got these estimated number. 
 
 Elementwise and norm, s ≈ 2.5 (method 2). The bucket is mostly unfused chains:
+
+Tokenization, s = ∞ (method 3). The above test shows that the tokenization takes around 3.7% of the total time (2.04s/53s), so handling all the tokenization before will not stalling gpu, which will give us a 3.7% time saved. 
+
 
 GELU runs as erf, mul and add kernels on the 4× hidden-width FFN tensor (10,240 wide), roughly 4 passes over the same data. Fused, it’s 1 pass: about 4×.
 Rotary runs mul, cat, neg, add on q and k, about 5 passes. Fused, it’s 1: about 5×.
@@ -205,7 +208,6 @@ That’s why GEMM saves less than fusion despite being 4.6× bigger: it’s alre
 
 Attention, s ≈ 1.2 (judgment). SDPA already uses a fused kernel (attn_fwd). A better one might gain 10 to 30%, and even infinite speedup would save only 3.6%.
 
-Tokenization, s = ∞ (method 3), but f is tiny. This is the subtle row. Your 3a number gives tokenization’s CPU time, probably around 20 ms per batch, or about 3 to 4% of total. But the trace shows that time already overlaps GPU work: the CPU tokenizes batch N+1 while the GPU still runs batch N. The 3a text assumed the pipeline works “in strict turns”, and the trace proves it doesn’t. The real f is the GPU idle time at each boundary: about 0.34 ms ÷ 590 ms ≈ 0.06%.
 
 
 ### End of ESM day 2
@@ -216,3 +218,103 @@ Tokenization, s = ∞ (method 3), but f is tiny. This is the subtle row. Your 3a
 - SDPA kernel: attn_fwd 
 - Amdahl top target: elementwise and norm
 - Surprised me: The difficulty for the Amdahl ranking estimation. 
+
+
+## Day 3
+
+### how much speed up are we expecting if we are using torch.compile?
+If the Inductor speeds up the 16.2% elementiwise adn norm operations by 2.5x and change nothing else, the time drops by 0.162 x (1-1/2.5) = 9.7%. which is about 1.11 more proteins per gpu hour. if we are using the best bucket size we tested last time: 8192 tokens, it produces 137195 proteins per GPU hour. after the optimization, it should be around 150914 proteins per gpu hour.  We also tested if the tokenizatin stall the GPU. Yesterday, from the experiment, it showed that the tokenizatin takes 3.8% of the wall time when run on its own. Today, we tested it by computing all the tokennization in advance, before inference. the gpu wall time is reduced from 52.5s to 50.5s. exactly two seconds less. which means that the tokenization was stalling the GPU. From now on, all the experiment use the pre-tokenization setting, to avoid gpu stalling by CPU's tokenizatin work. 
+
+
+### Compile the bucked pipeline
+The pitfall of torch.compile. Torch.compile specializes the generated code to the input shapes it sees.  Our bucketed pipeline has 89 batches, and almost every one has a different shape (batch size x length). By default, each new shape triggers a new compilation, and after a small number of them (8 by default ) pytorch gives up and silenty falls back to eager mode for new shapes.  This is why torch.compile might look not helpful at all. There are two fixes for this: mark the shapes as dynamic, so one compiled graph handles any batch size and length, or round lengths up to a few standard sizes, so only a handful of shapes ever appear. 
+
+Mode        Proteins per GPU-hour      vs eager       Compile + first pass(s)     ecompilations
+Eager (None)       142268               1.00x           51.8                    0
+Static             142269               1.00x           343.6                   8
+Dynamic            167290               1.17x           140.2                   0
+
+while doing this experiment, i've gotten some problems. both the static and dynamic compile mode fell back to eager mode after 8 compilation. 
+
+- Static and dynamic both logged 8 recompilations, then `hit config.recompile_limit (8)`. After that, PyTorch ran every new shape in eager mode, so most of the 89 batches ran uncompiled and neither result measured Inductor.
+- Static falling back was expected: almost every batch has a new shape. Dynamic falling back was not. Its recompile log showed the cause: every guard failure was on `rotary_embeddings._seq_len_cached` (modeling_esm.py:104).
+- Cause: the Hugging Face ESM rotary embedding caches its cos/sin tables and stores the cached length in a Python integer on the module. torch.compile treats integer module attributes as constants, so each new sequence length broke the guard and forced a recompile, whatever `dynamic=True` said about the input tensors.
+- Fix: replaced `RotaryEmbedding.forward` with a stateless version that rebuilds the tables on every call (`esm2/rotary_patch.py`). The cache never helped here anyway: lengths change at almost every batch. The patched model's output is bit-identical to the original (rtol=0, atol=0).
+- Result after the patch: dynamic ___ recompilations, static ___ (expected to still hit the limit, now on input shapes).
+
+### A fixed-shape microbenchark
+The pipeline now mixes two questions: how good inductor's kernels are, and how well compilation copes with changing shapes. Now we are going to test it with a fixed shape. We will test with one batch, with shape [16, 512], which is exactly 8192 token budget.  this batch contains 16 random sqeuences of 510 residues (plus the first and end token is 512). Then we test the forward pass for each mode: eager, default and max-autotune. 
+
+{'input_ids': (16, 512), 'attention_mask': (16, 512)}
+eager           584.53 ms per forward
+default         489.79 ms per forward
+max-autotune    487.33 ms per forward
+
+from the above result from the  Micro benchmark: (16 x 512): eager 584.5 ms, default 489.8 ms -> 1.19x. Pipeline dynamic: 1.18x.
+Dynamic shapes kept ~91% of the kernel gain (17.6% of 19.3%); the ~1.5% gap is the most fixed-size buckets could recover. Not worth it. and autotune brought almost nothing to this shape. 0.5% over default. 
+
+
+### read the inductor and find out what kernels are fused in the default mode (torch.compile, static):
+
+| Kernel | What it fuses |
+|---|---|
+| `triton_per_fused_eq_sum_0` | Counts mask tokens per sequence (`input_ids == mask_id`, then sum), for ESM's token-dropout scaling |
+| `triton_red_fused__to_copy_div_embedding_eq_masked_fill_mul_native_layer_norm_rsub_unsqueeze_1` | Embedding lookup, token-dropout rescaling (`masked_fill`, `mul`, `div`), attention-mask prep (`rsub` = 1 − mask) and the first LayerNorm. The whole input stage in one kernel |
+| `triton_red_fused__to_copy_add_addmm_..._embedding_..._native_layer_norm_..._view_5` | Most likely the first layer's bias + residual add + LayerNorm, with the cheap embedding recomputed inside instead of stored and reread |
+| `triton_poi_fused__scaled_dot_product_efficient_attention_..._arange_cat_cos_sin_..._transpose` (`_2`, `_3`, `_4`) | Rotary embedding: `arange`, `cos`, `sin` (the patched table rebuild), `cat`, `neg`, `mul`, `add`, plus the reshape and transpose into the head layout SDPA expects. Three variants; `_2` also absorbs a linear layer's bias |
+| `triton_poi_fused_add_addmm_div_erf_mul_view_6` | GELU: the up-projection's bias add, then exact GELU, `x · 0.5 · (1 + erf(x / √2))`. Still a separate pass after the library GEMM |
+| `triton_red_fused_add_addmm_native_layer_norm_view` (`_7`, `_8`, `_9`) | Bias of the preceding linear layer + residual add + next LayerNorm: after attention, after the FFN, and the final LayerNorm |
+| `triton_poi_fused_addmm_tanh_10` | Pooler: bias + `tanh` on token 0 of each sequence. Its output is unused |
+
+
+1. **Which fused kernels appear, and what does each combine?**
+   - GELU: `triton_poi_fused_add_addmm_div_erf_mul_view_6` = up-projection bias + exact GELU (`erf`).
+   - Residual + LayerNorm: `triton_red_fused_add_addmm_native_layer_norm_view` (x3) = bias + residual add + next LayerNorm (after attention, after FFN, final).
+   - Also fused: the whole input stage (embedding, token-dropout scaling, mask prep, first LayerNorm) and the rotary embedding with the head transpose.
+
+2. **Are the GEMMs still library calls?**
+   - Yes. Default mode generates no Triton GEMMs (no `triton_tem_` kernels).
+   - Inductor splits each `addmm` into a library matmul plus a bias add, and fuses the bias into the next kernel.
+   - GELU stays a separate pass: it rereads the FFN output from memory. Fusing GELU into the GEMM epilogue is what the Fusion lab can do and Inductor's default mode doesn't.
+
+3. **Does the rotary `cat` disappear into a fused kernel?**
+   - Yes. It's inside the rotary kernels, together with `cos`, `sin`, `neg`, `mul`, `add` and the patched table rebuild.
+
+### Profile the compile pipeline (torch.compile, dynamic)
+
+| Bucket | Eager share | Compiled share | Eager time (ms) | Compiled time (ms) |
+|---|---|---|---|---|
+| GEMM | 74.0% | 86.3% | 8,759 | 8,722 |
+| Attention | 3.6% | 4.9% | ~426 | 491 |
+| Elementwise and norm | 16.2% | 8.8% | ~1,918 | 887 |
+| Other | 6.2% | ~0.1% | ~734 | ~9 |
+| **Total GPU time (20 batches)** | | | **~11,836** | **10,109** |
+
+What the comparison shows:
+
+GEMMs didn’t change (8,759 → 8,722 ms). Their share rose from 74% to 86% only because everything around them shrank.
+Elementwise time fell 2.2× (1,918 → 887 ms), close to the s ≈ 2.5 you assumed.
+“Other” almost vanished (734 → 9 ms). The dtype casts, copies and embedding lookup are now inside fused kernels: their names contain _to_copy and embedding. Your 1.11× prediction left this bucket out, and it’s where the extra 6% came from.
+Total GPU time fell 1.17× (11,836 → 10,109 ms), matching the pipeline’s measured 1.18×. The profile and the stopwatch agree.
+Attention rose 15% (426 → 491 ms). That’s 65 ms, small next to the rest. It may be node drift, like the 5% we saw this morning, or Inductor handing SDPA its inputs in a different memory layout. Note it as unexplained.
+The kernel names match Step 4, so the line about fusion not depending on dynamic shapes holds.
+
+The new Amdahl table: 
+| Target | f | Fix | Achievable s | Time saved |
+|---|---|---|---|---|
+| CPU tokenization | ~4.3% | tokenize ahead in a background worker | ∞ | ~4.3% |
+| GEMMs | 86.3% | better kernels or tuning | ~1.05 (max 1.09) | ~4.1% (max 7.1%) |
+| GELU pass | 3.7% | fuse GELU into the GEMM epilogue (Fusion lab) | large | ≤ 3.7% |
+| Residual + LayerNorm | 2.9% | already fused; LayerNorm needs a full-row reduction, hard to merge into a GEMM | ~1 | ~0% |
+| Attention | 4.9% | a faster fused kernel | ~1.2 | ~0.8% |
+
+
+### End of ESM day 3
+- Prediction for compile: 1.11x
+- Tokenization test: total 52.5 s -> 50.5s with pre-tokenized input (stalling: yes / no) yes
+- Pipeline: eager 142268, static 142269, dynamic 167290 proteins/GPU-hour; recompilations static 8, dynamic 0
+- Micro (16 x 512): eager 584.53 ms, default 489.79 ms, max-autotune 487.33 ms
+- Inductor fused: GELU, residual + layernorm + input stage and rotary embedding; GEMMs still library calls:  no; GELU fused into GEMM: yes 
+- Elementwise share: 16.2% eager -> 8.8% compiled
+- New Amdahl top target: CPU tokenization
+- Surprised me: 
