@@ -1,0 +1,19 @@
+{
+  "model": "3b",
+  "pipeline": "sync",
+  "run": 1,
+  "num_proteins": 2000,
+  "timed_pass_s": 51.68,
+  "proteins_per_gpu_hour": 139328,
+  "padding_waste": 0.031,
+  "useful_TFLOPS": 79.1,
+  "computed_TFLOPS": 81.6,
+  "useful_MFU": 0.686,
+  "peak_memory_GB": 7.4,
+  "attention_path": "sdpa",
+  "max_tokens": 16384,
+  "num_batches": 45,
+  "compile": "none",
+  "compile_and_first_pass_s": 57.7,
+  "pretokenize_s": null
+}

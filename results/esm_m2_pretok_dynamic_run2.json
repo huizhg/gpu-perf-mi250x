@@ -1,0 +1,19 @@
+{
+  "model": "3b",
+  "pipeline": "pretok",
+  "run": 2,
+  "num_proteins": 2000,
+  "timed_pass_s": 43.56,
+  "proteins_per_gpu_hour": 165290,
+  "padding_waste": 0.031,
+  "useful_TFLOPS": 93.8,
+  "computed_TFLOPS": 96.8,
+  "useful_MFU": 0.814,
+  "peak_memory_GB": 6.5,
+  "attention_path": "sdpa",
+  "max_tokens": 16384,
+  "num_batches": 45,
+  "compile": "dynamic",
+  "compile_and_first_pass_s": 87.7,
+  "pretokenize_s": 2.04
+}

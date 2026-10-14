@@ -1,0 +1,66 @@
+{
+  "M": 8192,
+  "N": 10240,
+  "K": 2560,
+  "dtype": "bf16",
+  "rows": [
+    {
+      "name": "Floor",
+      "what": "x @ w.t() only",
+      "kernels": 1,
+      "kernel_names": [
+        "Cijk_Alik_Bljk_BBS_BH_Bias_HA_S_SAV_UserArgs_MT128x256x64_MI32x32x1_SN_LDSB1_AFC1_AFEM1_AFEM1_ASEM1_CLR1_CADS0_DTVA0_DTVB0_EPS0_FDSI0_GRPM1_GRVWA8_GRVWB8_GSUAMB_GLS0_ISA90a_IU1_K1_LBSPPA128_LBSPPB128_LBSPPM0_LPA8_LPB8_LPM0_LRVW8_LWPMn1_MIAV0_MIWT2_4_MO40_NTn1_NTA0_NTB0_NTC0_NTD0_NTM0_NEPBS0_NLCA1_NLCB1_ONLL1_PGR2_PLR1_PKA1_SIA3_SS1_SPO0_SRVW0_SSO0_SVW1_SK0_SKXCCM0_TLDS1_ULSGRO0_USL1_UIOFGRO0_USFGROn1_VSn1_VWA1_VWB1_WSGRA1_WSGRB1_WS64_WG64_4_1"
+      ],
+      "ms": 3.8154029846191406,
+      "lo": 3.8118820190429688,
+      "hi": 3.819883108139038
+    },
+    {
+      "name": "Eager",
+      "what": "addmm + separate GELU",
+      "kernels": 2,
+      "kernel_names": [
+        "Cijk_Alik_Bljk_BBS_BH_Bias_HA_S_SAV_UserArgs_MT128x256x64_MI32x32x1_SN_LDSB1_AFC1_AFEM1_AFEM1_ASEM1_CLR1_CADS0_DTVA0_DTVB0_EPS0_FDSI0_GRPM1_GRVWA8_GRVWB8_GSUAMB_GLS0_ISA90a_IU1_K1_LBSPPA128_LBSPPB128_LBSPPM0_LPA8_LPB8_LPM0_LRVW8_LWPMn1_MIAV0_MIWT2_4_MO40_NTn1_NTA0_NTB0_NTC0_NTD0_NTM0_NEPBS0_NLCA1_NLCB1_ONLL1_PGR2_PLR1_PKA1_SIA3_SS1_SPO0_SRVW0_SSO0_SVW1_SK0_SKXCCM0_TLDS1_ULSGRO0_USL1_UIOFGRO0_USFGROn1_VSn1_VWA1_VWB1_WSGRA1_WSGRB1_WS64_WG64_4_1",
+        "void at::native::vectorized_elementwise_kernel<8, at::native::GeluCUDAKernelImpl(at::TensorIteratorBase&, at::native::GeluType)::{lambda()#2}::operator()() const::{lambda()#4}::operator()() const::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul> >(int, at::native::GeluCUDAKernelImpl(at::TensorIteratorBase&, at::native::GeluType)::{lambda()#2}::operator()() const::{lambda()#4}::operator()() const::{lambda(c10::BFloat16)#1}, std::array<char*, 2ul>)"
+      ],
+      "ms": 4.2379679679870605,
+      "lo": 4.236207962036133,
+      "hi": 4.239247798919678
+    },
+    {
+      "name": "Inductor default",
+      "what": "mm + fused bias-and-GELU kernel",
+      "kernels": 2,
+      "kernel_names": [
+        "Cijk_Alik_Bljk_BBS_BH_Bias_HA_S_SAV_UserArgs_MT128x256x64_MI32x32x1_SN_LDSB1_AFC1_AFEM1_AFEM1_ASEM1_CLR1_CADS0_DTVA0_DTVB0_EPS0_FDSI0_GRPM1_GRVWA8_GRVWB8_GSUAMB_GLS0_ISA90a_IU1_K1_LBSPPA128_LBSPPB128_LBSPPM0_LPA8_LPB8_LPM0_LRVW8_LWPMn1_MIAV0_MIWT2_4_MO40_NTn1_NTA0_NTB0_NTC0_NTD0_NTM0_NEPBS0_NLCA1_NLCB1_ONLL1_PGR2_PLR1_PKA1_SIA3_SS1_SPO0_SRVW0_SSO0_SVW1_SK0_SKXCCM0_TLDS1_ULSGRO0_USL1_UIOFGRO0_USFGROn1_VSn1_VWA1_VWB1_WSGRA1_WSGRB1_WS64_WG64_4_1",
+        "triton_poi_fused_addmm_gelu_0"
+      ],
+      "ms": 4.259407997131348,
+      "lo": 4.256767988204956,
+      "hi": 4.263168096542358
+    },
+    {
+      "name": "Your fused kernel",
+      "what": "Triton GEMM + bias + exact GELU epilogue",
+      "kernels": 1,
+      "kernel_names": [
+        "gemm_kernel_v5"
+      ],
+      "ms": 3.9017239809036255,
+      "lo": 3.9003634452819824,
+      "hi": 3.9051640033721924
+    },
+    {
+      "name": "Your GEMM alone",
+      "what": "same kernel, epilogue off",
+      "kernels": 1,
+      "kernel_names": [
+        "gemm_kernel_v5"
+      ],
+      "ms": 3.670922040939331,
+      "lo": 3.669961929321289,
+      "hi": 3.6715619564056396
+    }
+  ]
+}
+

@@ -256,6 +256,20 @@ Dynamic shapes kept ~91% of the kernel gain (17.6% of 19.3%); the ~1.5% gap is t
 
 ### read the inductor and find out what kernels are fused in the default mode (torch.compile, static):
 
+cli output: 
+      1 def triton_red_fused_add_addmm_native_layer_norm_view_9
+      1 def triton_red_fused_add_addmm_native_layer_norm_view_8
+      1 def triton_red_fused_add_addmm_native_layer_norm_view_7
+      1 def triton_red_fused__to_copy_div_embedding_eq_masked_fill_mul_native_layer_norm_rsub_unsqueeze_1
+      1 def triton_red_fused__to_copy_add_addmm_div_embedding_eq_masked_fill_mul_native_layer_norm_rsub_unsqueeze_view_5
+      1 def triton_poi_fused_addmm_tanh_10
+      1 def triton_poi_fused_add_addmm_div_erf_mul_view_6
+      1 def triton_poi_fused__scaled_dot_product_efficient_attention__to_copy_add_arange_cat_cos_expand_mul_neg_rsub_sin_split_transpose_unsqueeze_view_4
+      1 def triton_poi_fused__scaled_dot_product_efficient_attention__to_copy_add_arange_cat_cos_expand_mul_neg_rsub_sin_split_transpose_unsqueeze_view_3
+      1 def triton_poi_fused__scaled_dot_product_efficient_attention__to_copy_add_addmm_arange_cat_cos_expand_mul_neg_rsub_sin_split_transpose_unsqueeze_view_2
+      1 def triton_per_fused_eq_sum_0
+
+
 | Kernel | What it fuses |
 |---|---|
 | `triton_per_fused_eq_sum_0` | Counts mask tokens per sequence (`input_ids == mask_id`, then sum), for ESM's token-dropout scaling |
@@ -299,22 +313,103 @@ Total GPU time fell 1.17× (11,836 → 10,109 ms), matching the pipeline’s mea
 Attention rose 15% (426 → 491 ms). That’s 65 ms, small next to the rest. It may be node drift, like the 5% we saw this morning, or Inductor handing SDPA its inputs in a different memory layout. Note it as unexplained.
 The kernel names match Step 4, so the line about fusion not depending on dynamic shapes holds.
 
-The new Amdahl table: 
-| Target | f | Fix | Achievable s | Time saved |
-|---|---|---|---|---|
-| CPU tokenization | ~4.3% | tokenize ahead in a background worker | ∞ | ~4.3% |
-| GEMMs | 86.3% | better kernels or tuning | ~1.05 (max 1.09) | ~4.1% (max 7.1%) |
-| GELU pass | 3.7% | fuse GELU into the GEMM epilogue (Fusion lab) | large | ≤ 3.7% |
-| Residual + LayerNorm | 2.9% | already fused; LayerNorm needs a full-row reduction, hard to merge into a GEMM | ~1 | ~0% |
-| Attention | 4.9% | a faster fused kernel | ~1.2 | ~0.8% |
+The new Amdahl table (all shares of wall time, compiled pipeline, 43.0 s per 2,000 proteins):
 
+| Target | f (wall time) | Fix | Achievable s | Time saved | Cost of the fix |
+|---|---|---|---|---|---|
+| CPU tokenization stalls | ~4.6% (2.0 s of 43.0 s) | tokenize ahead in a background thread, pinned memory | ∞ (fully hidden) | ~4.6% | low: ~20 lines |
+| GEMMs | 82.3% (86.3% of GPU time) | better kernels or library tuning | ~1.05 (max 1.09) | ~3.9% (max 6.8%) | very high: already vendor-tuned |
+| GELU pass | 3.5% (3.7% of GPU time) | fuse GELU into the GEMM epilogue (Fusion lab) | large, minus the erf cost in the epilogue | ≤3.5% (realistic ~2-3%) | medium: one kernel, per shape |
+| Attention | 4.7% (4.9% of GPU time) | recover the compile regression (422 ms eager vs 491 ms compiled) | ~1.16 | ~0.7% | medium: investigate Q/K/V layout |
+| Residual + LayerNorm | 2.8% (2.9% of GPU time) | already fused; LayerNorm needs a full-row reduction, hard to merge into a GEMM | ~1 | ~0% | n/a |
+| Rotary + attention input prep | 2.0% (2.1% of GPU time) | already fused by Inductor | ~1 | ~0% | n/a |
 
 ### End of ESM day 3
 - Prediction for compile: 1.11x
-- Tokenization test: total 52.5 s -> 50.5s with pre-tokenized input (stalling: yes / no) yes
-- Pipeline: eager 142268, static 142269, dynamic 167290 proteins/GPU-hour; recompilations static 8, dynamic 0
-- Micro (16 x 512): eager 584.53 ms, default 489.79 ms, max-autotune 487.33 ms
-- Inductor fused: GELU, residual + layernorm + input stage and rotary embedding; GEMMs still library calls:  no; GELU fused into GEMM: yes 
-- Elementwise share: 16.2% eager -> 8.8% compiled
-- New Amdahl top target: CPU tokenization
-- Surprised me: 
+- Tokenization test: total 52.5 s -> 50.5 s with pre-tokenized input (stalling: yes, ~3.8%)
+- Pipeline: eager 142,268, static 142,269, dynamic 167,290 proteins/GPU-hour (dynamic 1.18x vs eager); recompilations static 8 (hit the limit, fell back to eager), dynamic 0
+- Micro (16 x 512): eager 584.53 ms, default 489.79 ms (1.19x), max-autotune 487.33 ms (1.20x)
+- Inductor fused: bias + GELU into one pointwise kernel; residual add + bias + LayerNorm; rotary embedding + attention input prep; embedding + first LayerNorm; pooler dense + tanh (unused by the pipeline)
+- GEMMs still library calls: yes (Tensile Cijk kernels, 86% of GPU time; no triton_tem_ kernels)
+- GELU fused into GEMM: no (Inductor moved the bias out of addmm into a separate pointwise GELU kernel)
+- Elementwise share: 16.2% eager -> 8.8% compiled (time ~1.92 s -> ~0.89 s, measured s ~2.2)
+- Attention: 422 ms eager -> 491 ms compiled (slower; open question)
+- New Amdahl top target: CPU tokenization stalls (~3.8%), then GELU-into-GEMM fusion (<=3.7%)
+- Surprised me: static compile was exactly as fast as eager, because it silently fell back after 8 recompilations; and attention got slower after compiling
+
+
+## Day 4
+
+### tokenizer prefetch
+we have found that the tokenization in cpu stalls the gpu. now we tokenize the next batch in a background thread while the gpu works. and put the result in pinned memory, which allows a asynchronous copy. we create a copy of the compiled.py and name it prefetch.py with dynamic compile. 
+the result is : 166476 proteins per gpu hour. and the compile_and_first_pass_s is  133.7s for the first run. and then around 80s for the other two runs, as the first run is cold compile, the second and third run used the cache from the first one. Then I found a problem from the previous measurement. in the compiled.py. we put all the tokenization before the inference. Where the measuremnet for the dynamic compile actually give us the ceiling number: 167290. which is because the tokenization time is not counted in the proteins per gpu hours, as we treat tokenization for free, becuase we fed each batch the ready tokenized the embeddings. To make a fair comparision. we need to do another three run in a new prefetch.py, where we test three mode: pretok: all up front, out side the timer, which represent the celing. And sync: the tokenizatin is per batch, inside the timer, gpu waits. then prefetch: per batch, the tokenization run in the background thread. 
+
+The new resulsts are: 
+pretok: 165290 (ceiling)
+Sync: 164048
+Prefetch: 165180
+
+
+### Fusion lab
+Fusion lab prediction (before measuring)
+Shape 8192 x 2560 -> 10240, bf16, exact GELU.
+- GEMM: 2 x 8192 x 10240 x 2560 = 430 GFLOP, ~4.3 ms at 100 TFLOPS. Floor ~4.3 ms.
+- Unfused GELU traffic: 8192 x 10240 x 2 B = 168 MB read + 168 MB written = 336 MB,
+  0.27 ms at 1.25 TB/s. Profile shows 0.52 ms per call, so it runs at about half bandwidth.
+- The fused kernel deletes that traffic but still computes erf.
+- Prediction: fused = floor + a small epilogue cost, 0.3 to 0.5 ms faster than Inductor.
+
+
+
+### Fusion lab: 8192 x 10240 x 2560, bf16, exact GELU
+
+| Contestant | What runs | Kernels | Time (ms) | Range (ms) | vs floor | TFLOPS |
+| --- | --- | --- | --- | --- | --- | --- |
+| Floor | x @ w.t() only | 1 | 3.815 | 3.812 to 3.820 | 1.00x | 112.6 |
+| Eager | addmm + separate GELU | 2 | 4.238 | 4.236 to 4.239 | 1.11x | 101.3 |
+| Inductor default | mm + fused bias-and-GELU kernel | 2 | 4.259 | 4.257 to 4.263 | 1.12x | 100.8 |
+| fused kernel | Triton GEMM + bias + exact GELU epilogue | 1 | 3.902 | 3.900 to 3.905 | 1.02x | 110.1 |
+| GEMM alone | same kernel, epilogue off | 1 | 3.671 | 3.670 to 3.672 | 0.96x | 117.0 |
+
+### Day 4, Step 3: Amdahl
+1. Kernel: fused 3.902 ms, 2.3% above the floor (3.815). Beat Inductor by 0.358 ms (predicted 0.3-0.5).
+   Split: 0.213 fusion (epilogue 0.231 replaces a 0.444 GELU pass) + 0.144 faster GEMM (3.671 vs 3.815).
+   Prediction missed the erf compute: ~0.21 ms of vector work that fusion exposes instead of hiding.
+2. Model: 3.7% x 0.358 / 0.444 = ~3.0% end to end (fusion alone ~1.8%). Upper bound: tuned at M = 8192 only.
+3. Ship it? 
+  For: 
+    About 3% end to end, on the largest elementwise kernel left after compiling.
+    Two kernels become one.
+    The GEMM half could ship separately: a faster tile config than the library’s is worth contributing back even without the fusion.
+    
+  Against:
+    Tuned for one shape on one GPU; MI300 has different matrix instructions and LDS sizes.
+    Variable batch shapes put the 1.2% GEMM part at risk.
+    The fusion alone is only 1.8%.
+I   nductor may learn this epilogue fusion itself, which makes the maintenance cost temporary but real.
+
+### End of ESM day 4
+- - Prefetch: 166,476 proteins/GPU-hour (dynamic compile), ~1.00x vs sync. Null result: tokenizing a batch
+  takes 46 ms vs ~960 ms (compiled) to 1,150 ms (eager) of GPU work, and async launches already overlap them.
+  Eager check: sync 51.62 s vs pretok 51.58 s.
+- Fusion lab (8192 x 10240 x 2560, bf16): floor 3.815 ms, eager 4.238 ms, Inductor 4.259 ms, fused 3.902 ms
+- Your GEMM alone: 3.671 ms (104% of the floor's speed)
+- Predicted saving vs Inductor: 0.3-0.5 ms; measured: 0.358 ms (0.213 fusion + 0.144 faster GEMM)
+- End-to-end saving if deployed: ~3.0% (fusion alone ~1.8%; upper bound, tuned at M = 8192 only)
+- Ship it? maybe not. Need to check if there's free fix from inductor. 
+- Surprised me:
+  1. The epilogue costs 0.231 ms, half a separate GELU pass. Fusion removed the memory traffic,
+     but the erf compute (~0.2 ms of vector work) now runs while the matrix cores sit idle.
+  2. My Triton GEMM beat hipBLASLt by 3.8% on this shape (117.0 vs 112.6 TFLOPS).
+  3. Eager beat Inductor (4.238 vs 4.259 ms): hipBLASLt already fuses the bias,
+     so Inductor's addmm split bought nothing here.
+  4. Day 3's 2.0 s "tokenization stall" equals total tokenization time (2.05 s), so the day 3 script ran
+     tokenization serially (suspect: a per-batch GPU-to-CPU sync, ___). Today's loop hides it with no prefetch.
+
+## Day 5
+
+- Free-fix test (one session; node ~3% slower than day 4, compare within): floor 3.950 ms, fused 4.010,
+  Inductor default 4.403, max-autotune 4.229 (own Triton GEMM, GELU separate, 2 kernels; Triton-only identical).
+  Max-autotune recovers the GEMM half (0.174 ms) for free; fusion half (0.219 ms) remains mine.
+  Fused kernel 5.5% faster than the best compiler setting: earns its place at this shape.
+  Open: why no epilogue fusion (hypothesis: epilogue benchmarked on 1 config only); dynamic-shape max-autotune untested.

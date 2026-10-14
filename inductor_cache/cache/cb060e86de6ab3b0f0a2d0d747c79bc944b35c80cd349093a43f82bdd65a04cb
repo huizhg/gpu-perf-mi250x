@@ -1,0 +1,49 @@
+{
+    "system": {
+        "device": {
+            "name": "gfx90a:sramecc+:xnack-"
+        },
+        "version": {
+            "triton": "3.6.00355c3e3452fa4500122244b8fff8864f22bc05c417a3d6f5dada9f2e92f8040-c8b82f70c83ad10bc0190fa67864348b895f733d67658a3becaf13746198f778-2a063bb7909777d3659945244277e900d9f7cfc35de9a758578469ee4b90fce9-23d635e690d670bf61798e1259674b78c0ed5ba222ab6a455f329f27a758fc2d-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855-62556f905349ceed6286f9926f72ced9c5e990807e0791873945e93ca8e287d2-8f6569a35754508b27d2a70e1034d33ee19f0ef9f24a9eaa5e4ff999cddf2044-c5d3403b88b5bb728f8ac78c55163198e418430f126c842892c68cb4b6baaa78-25cb0bee9547488335de2d495af738298ba6d4c20f1d37941dc17751c57a211e-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855-eea55698bab00c726b3d1d495b390b72a63aaa8d167781a65ea5212d394d76f6-4ad4b4440aa4a5ee15ac2382ae78a7aa8029986c22ec2acbd072a91810e85e94-394ff34a5e685225d91248af54708bf0f01433d41e57ba236364521565cf92bd-9394c60071ea0bbca6c290c44a5a371b8b4a02683d529debc3be04401d93e198-5d15c5bebef8d7aa51b21fd187e5faa95eba4a213254355bc69e0648013599f7-30106ed84518c6ca7aca08e2c0ee188755f512cc0cb2d7da8914cc48c1ad6dcc-adb54e71d0ffc3bdac437fbc97929769fbbe4ebd03e6361c6357f2a24f7c5954-27b2a5d1e8db008bacefe6019f63922bbd65926de90bb1b527ee597477d2f365-a610dc5c215589aab7a784e1c07acef3e16d53ef00f08de793899964956f4e2a-18572e33e474a820799036f2b2f8c3e54d8a526386356716cccf2bf32a832376-2cdca74c4297804dcf499a7e9d4315ab87edfe2d72f536a8fdc02f28a3e7dacd-b53abe93473eb37d88bc378692065c9a8b1bf54b6417cb1911a13d10918c6d20-f60c2bb2d8eebe1c191f4b8b819844414dd1bce243645635a094f9f92665a58e-08abee21ce6230a873ed0831f70f9570b7ce39969dbf9b2f28ae1a1992ee1cc7-f44a43511b97420e82438746d1730db6aea312619032077687fb36ffe23727ba-be3429f6d069a22ddc2ca048d80e1616df85de51a4b0e1e20e3054264a58f1f8-1a2a7b1706fe99659dd86b29d6397d603d7d0cfef4f827fe902a494728ccddc1-5305890c3b133def44e2f3d3405e0fb1fd6ce78d0a28b2127670a195bbe11c66",
+            "hip": "7.0.51831"
+        },
+        "hash": "cb060e86de6ab3b0f0a2d0d747c79bc944b35c80cd349093a43f82bdd65a04cb"
+    },
+    "cache": {
+        "mm": {
+            "[('cuda', 'torch.bfloat16', 8192, 2560, 2560, 1, 0), ('cuda', 'torch.bfloat16', 2560, 10240, 1, 2560, 0)]": {
+                "highest": {
+                    "mm-cqrjyn5jqdhj5q3lohxxeq3fxnpvy6qsigzdm2ykqas7fpkl7zrz": 3.963568925857544,
+                    "triton_mm-cnnsgajnchtmiqviohpwy5cx4pvf2ocrlmp6jekpwmn6o2pnx6dr": 84.44376373291016,
+                    "triton_mm-cu5yeln6z7tjxyawq4fsia2bdfjgrewzprao7pmhl7rpt2zgd5mw": 11.23373794555664,
+                    "triton_mm-crq4r65znobc5vfieog4xhifqurj2trtxq3vwpt7bvvalyistsxd": 22.43643569946289,
+                    "triton_mm-cbvx7by5mfn7l2qow57uz67vj7zghp46gwfwyamdnhezzd7asxoy": 7.21544885635376,
+                    "triton_mm-cscsdpif2sbpcxtaejii4ct7idqxtawejbjou4kjkbd53yyej4xj": 6.058155059814453,
+                    "triton_mm-cwlr4n4nghe6r7ce3mq2gibfpxl6j4cnzpgnfhokx4gqjbbx2nox": 8.661867141723633,
+                    "triton_mm-cmp7aua6xsl63f4nttuu7eyxsvfjvyiuz2p34wrz27jmugc7ezx4": 8.82538890838623,
+                    "triton_mm-culggxn6u7kzftc252dfafips2sz4e4qbdq46a4uywozkgeh2467": 5.875432968139648,
+                    "triton_mm-cw2m3mqitj4b4n57atlxzmacuk74ac736gvd5nviupxwteisvet5": 6.154955863952637,
+                    "triton_mm-c3rudusw4ka4b5qv3lde7qai6tu4wfljzgosch476waaozk4r6je": 6.282317161560059,
+                    "triton_mm-ccvg3vkfzcep37yhqmyhi4i7vhlpnouhecrr27rbjgi652liihn7": 12.261430740356445,
+                    "triton_mm-cuqsoeviu7h76w7cgdbil4uqaoslhnbndychgbicpvdflsqkbudm": 5.010141849517822,
+                    "triton_mm-coswepaqwwuqllznw34lbamw6sf4mdbkzucqcuobyprho57uj6dc": 5.054781913757324,
+                    "triton_mm-colqgqkevc367iw26gzyg5a2xpfhdf6zksounmswajb2t4cwzckx": 5.6379899978637695,
+                    "triton_mm-ctzokmwh6ewjvljmlcvcmklr6tij7wrrlwvc4yfumr7szyo54sus": 5.811111927032471,
+                    "triton_mm-ca64ygq4ezawpsixjn5uueqy3uc22fmwu5ur24x3cgdtozzpi6ev": 4.739258766174316,
+                    "triton_mm-c2iypxe7w34llk6h4yop7govvammyvdxfafdz2kv7nvn7plpbc4u": 7.557212829589844,
+                    "triton_mm-cx54rksxvvscitotn7b5wezqfejcpbpjxtnkhszjax6xuzxobyjo": 5.226143836975098,
+                    "triton_mm-cem2dd3udwjm5ubs7nuthngqqx454qtxzrh4ryppunwhrwtfwx5e": 5.093983173370361,
+                    "triton_mm-calnem5rku7iweyqwaye7pywxvmgpnbmrxwhpamlkoqg5vjbut5x": 4.81157922744751,
+                    "triton_mm-cjmde5iqu7dgekxgfhhdo2hmz4luzdmcwv2ppai4fzjhfxcxxvrf": 4.22517204284668,
+                    "triton_mm-cyw75mpsromlc6nfif7xbxoynhad6f7xlxdyezewrtrom235a3zm": 4.2693328857421875,
+                    "triton_mm-cjmogrnnywtt3kkn754yaf626jhip7qezw43lyjjsbqso6g7tbir": 4.317813873291016,
+                    "triton_mm-cafhikt4ewelqksviwagoae67su3lhdwys65sw2shp25b4l2sdwd": 4.06181001663208,
+                    "triton_mm-c6fz2qxt2gqnypenip4w5cb5cxoa3rec4nesazq7jrxrff5xemsy": 3.942768096923828,
+                    "triton_mm-cr6hp3oc6g7jjmu4ek47pkxonpr6hd2a5frnvj2lzhav43pxkcni": 3.973809003829956,
+                    "triton_mm-c77ixrj7dxapnvud2uylg7i4x4kq6yr3h6zixtxgkvyj4k4zbcu6": 3.9803690910339355,
+                    "triton_mm-cpirbzucujxcna2bo2gsr76idl6nnszbj7bnst7ibv7uky7owimf": 3.815087080001831
+                }
+            }
+        }
+    }
+}

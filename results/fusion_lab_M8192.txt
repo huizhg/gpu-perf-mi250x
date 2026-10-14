@@ -1,0 +1,31 @@
+ok  Floor
+ok  Eager
+ok  Inductor default
+ok  Your fused kernel
+ok  Your GEMM alone
+/opt/venv/lib/python3.12/site-packages/torch/profiler/profiler.py:217: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+  _warn_once(
+[W1013 15:48:09.287069304 collection.cpp:1148] Warning: ROCTracer produced duplicate flow start: 4 (function operator())
+
+### Fusion lab: 8192 x 10240 x 2560, bf16, exact GELU
+
+| Contestant | What runs | Kernels | Time (ms) | Range (ms) | vs floor | TFLOPS |
+| --- | --- | --- | --- | --- | --- | --- |
+| Floor | x @ w.t() only | 1 | 3.815 | 3.812 to 3.820 | 1.00x | 112.6 |
+| Eager | addmm + separate GELU | 2 | 4.238 | 4.236 to 4.239 | 1.11x | 101.3 |
+| Inductor default | mm + fused bias-and-GELU kernel | 2 | 4.259 | 4.257 to 4.263 | 1.12x | 100.8 |
+| Your fused kernel | Triton GEMM + bias + exact GELU epilogue | 1 | 3.902 | 3.900 to 3.905 | 1.02x | 110.1 |
+| Your GEMM alone | same kernel, epilogue off | 1 | 3.671 | 3.670 to 3.672 | 0.96x | 117.0 |
+
+Kernel names:
+  Floor: Cijk_Alik_Bljk_BBS_BH_Bias_HA_S_SAV_UserArgs_MT128x256x64_MI
+  Eager: Cijk_Alik_Bljk_BBS_BH_Bias_HA_S_SAV_UserArgs_MT128x256x64_MI, void at::native::vectorized_elementwise_kernel<8, at::native
+  Inductor default: Cijk_Alik_Bljk_BBS_BH_Bias_HA_S_SAV_UserArgs_MT128x256x64_MI, triton_poi_fused_addmm_gelu_0
+  Your fused kernel: gemm_kernel_v5
+  Your GEMM alone: gemm_kernel_v5
+
+Saving vs Inductor (Inductor - fused): +0.358 ms   (predicted 0.3 to 0.5)
+Your GEMM alone: 3.671 ms = 104% of the floor's speed
+Why fused differs from the floor (+0.086 ms) = GEMM gap (-0.144) + epilogue cost (+0.231)
+
+Saved results/fusion_lab_M8192.json
